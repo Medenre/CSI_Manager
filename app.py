@@ -34,3 +34,15 @@ def create_ticket():
         return redirect(url_for('index'))
     return render_template('create_ticket.html')
 
+@app.route('/respond_ticket/<int:ticket_id>', methods=['GET', 'POST'])
+def respond_ticket(ticket_id):
+    ticket = Ticket.query.get_or_404(ticket_id)
+    if request.method == 'POST':
+        admin_response = request.form['admin_response']
+        ticket.admin_response = admin_response
+        ticket.status = 'Closed'
+        ticket.is_admin_response = True
+        db.session.commit()
+        return redirect(url_for('index'))
+    return render_template('respond_ticket.html', ticket=ticket)
+
