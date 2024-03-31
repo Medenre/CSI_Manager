@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un ticket</title>
+</head>
+<body>
+    <h1>Créer un ticket</h1>
+    <form action="{{ url_for('create_ticket') }}" method="post">
+        <label for="title">Titre :</label><br>
+        <input type="text" id="title" name="title"><br>
+        <label for="description">Description :</label><br>
+        <textarea id="description" name="description"></textarea><br>
+        <button type="submit">Soumettre</button>
+    </form>
+</body>
+</html>

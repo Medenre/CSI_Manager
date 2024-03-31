@@ -1,7 +1,36 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ticket.db'
+db = SQLAlchemy(app)
 
-@app.route("/")
-def hello_world():
-    return render_template("index.html", title="Hello")
+if __name__ == "__main__":
+    # Création de toutes les tables dans la base de données
+    db.create_all()
+    # Démarrage de l'application Flask
+    app.run(debug=True)
+
+class Ticket(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    status = db.Column(db.String(20), default='Open')
+    is_admin_response = db.Column(db.Boolean, default=False)
+
+@app.route('/')
+def index():
+    tickets = Ticket.query.all()
+    return render_template('index.html', tickets=tickets)
+
+@app.route('/create_ticket', methods=['GET', 'POST'])
+def create_ticket():
+    if request.method == 'POST':
+        title = request.form['title']
+        description = request.form['description']
+        ticket = Ticket(title=title, description=description)
+        db.session.add(ticket)
+        db.session.commit()
+        return redirect(url_for('index'))
+    return render_template('create_ticket.html')
+
