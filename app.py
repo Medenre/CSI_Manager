@@ -1,15 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ticket.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tickets.db'
 db = SQLAlchemy(app)
-
-if __name__ == "__main__":
-    # Création de toutes les tables dans la base de données
-    db.create_all()
-    # Démarrage de l'application Flask
-    app.run(debug=True)
 
 class Ticket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -17,6 +11,15 @@ class Ticket(db.Model):
     description = db.Column(db.Text, nullable=False)
     status = db.Column(db.String(20), default='Open')
     is_admin_response = db.Column(db.Boolean, default=False)
+    admin_response = db.Column(db.Text)
+
+# Fonction pour créer les tables dans la base de données
+def create_tables():
+    with app.app_context():
+        db.create_all()
+
+# Appel de la fonction pour créer les tables au lancement de l'application
+create_tables()
 
 @app.route('/')
 def index():
@@ -46,3 +49,14 @@ def respond_ticket(ticket_id):
         return redirect(url_for('index'))
     return render_template('respond_ticket.html', ticket=ticket)
 
+@app.route('/ticket/<int:ticket_id>')
+def view_ticket(ticket_id):
+    ticket = Ticket.query.get_or_404(ticket_id)
+    return render_template('view_ticket.html', ticket=ticket)
+
+@app.route('/change_status/<int:ticket_id>/<new_status>')
+def change_status(ticket_id, new_status):
+    ticket = Ticket.query.get_or_404(ticket_id)
+    ticket.status = new_status
+    db.session.commit()
+    return redirect(url_for('view_ticket', ticket_id=ticket.id))

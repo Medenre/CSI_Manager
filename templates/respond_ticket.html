@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Répondre au Ticket</title>
+</head>
+<body>
+    <h1>Répondre au Ticket</h1>
+    <p><strong>Titre :</strong> {{ ticket.title }}</p>
+    <p><strong>Description :</strong> {{ ticket.description }}</p>
+    <form action="{{ url_for('respond_ticket', ticket_id=ticket.id) }}" method="post">
+        <label for="admin_response">Réponse de l'administrateur :</label><br>
+        <textarea id="admin_response" name="admin_response"></textarea><br>
+        <button type="submit">Soumettre</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails du Ticket</title>
+</head>
+<body>
+    <h1>Détails du Ticket</h1>
+    <p><strong>Titre :</strong> {{ ticket.title }}</p>
+    <p><strong>Description :</strong> {{ ticket.description }}</p>
+    <p><strong>Statut :</strong> {{ ticket.status }}</p>
+    {% if ticket.is_admin_response %}
+    <p><strong>Réponse de l'administrateur :</strong> {{ ticket.admin_response }}</p>
+    {% endif %}
+</body>
+</html>
