@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des tickets</title>
+    <title>Accueil</title>
 </head>
 <body>
-    <h1>Liste des tickets</h1>
-    <ul>
-        {% for ticket in tickets %}
-            <li> {{ticket.id}} - {{ ticket.title }} - {{ticket.description}} - {{ ticket.status }}</li>
-        {% endfor %}
-    </ul>
+    <header>
+        <h1>Liste des tickets</h1>
+        <a href="{{ url_for('login') }}">Connexion</a>
+    </header>
+    <main>
+        <ul>
+            {% for ticket in tickets %}
+                <li>{{ ticket.title }} - {{ ticket.description }}</li>
+            {% endfor %}
+        </ul>
+    </main>
 </body>
 </html>
