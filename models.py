@@ -1,12 +1,11 @@
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-from app import app 
 
-db = SQLAlchemy(app)
+
+db = SQLAlchemy()
 
 # Fonction pour créer les tables dans la base de données
 def create_tables():
-    with app.app_context():
         db.create_all()
         
 class Ticket(db.Model):
