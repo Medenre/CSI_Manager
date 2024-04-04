@@ -4,7 +4,7 @@ from routes import init_app
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///csi_bdd.db'
-app.config['SECRET_KEY'] = 'd5fb8c4fa8bd46638dadc4e751e0d68d'
+app.config['SECRET_KEY'] = b'\x97\xfd\xb8\x98j-\xd1;$\xbb\xe2Z\xc6\x0c\x87t' #python -c 'import os; print(os.urandom(16))'
 
 # Appel de la fonction pour créer les tables au lancement de l'application
 #create_tables()

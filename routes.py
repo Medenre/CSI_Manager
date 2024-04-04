@@ -3,11 +3,42 @@ from flask import render_template, request, abort, redirect, url_for, session, f
 from models import db, User,Ticket
 
 
-def init_app(app):  
+def init_app(app):  #POUR INIT APP.PY
+    
     @app.route('/')
     def index():
-        tickets = Ticket.query.all()
-        return render_template('index.html', tickets=tickets)
+        return render_template('login.html')
+        #POUR AFFICHER LES TICKETS
+        #tickets = Ticket.query.all()
+        #return render_template('index.html', tickets=tickets)
+    
+    @app.route('/login', methods=['GET', 'POST'])
+    def login():
+        if request.method == 'POST':
+            username = request.form['username']
+            password = request.form['password']
+            user = User.query.filter_by(username=username).first()
+            if user and user.check_password(password):
+                session['logged_in'] = True
+                session['user_id'] = user.id
+                session['is_admin'] = user.is_admin  # Stocker si l'utilisateur est un admin
+                return redirect(url_for('home'))
+            else:
+                flash('Identifiants incorrects. Veuillez réessayer.', 'danger')
+        return render_template('login.html')
+    
+    @app.route('/home')
+    def home():
+        return render_template('index.html')
+    
+
+    @app.route('/admin/dashboard')
+    def admin_dashboard():
+        if 'user_id' not in session or not session['is_admin']:
+            abort(403)  # Accès interdit$
+        else:
+            return render_template('index.html')
+        
 
     @app.route('/create_ticket', methods=['GET', 'POST'])
     def create_ticket():
@@ -74,28 +105,10 @@ def init_app(app):
 
         return render_template('register.html')
 
-    @app.route('/login', methods=['GET', 'POST'])
-    def login():
-        if request.method == 'POST':
-            username = request.form['username']
-            password = request.form['password']
-            user = User.query.filter_by(username=username).first()
-            if user and user.check_password(password):
-                session['logged_in'] = True
-                session['user_id'] = user.id
-                session['is_admin'] = user.is_admin  # Stocker si l'utilisateur est un admin
-                return redirect(url_for('index'))
-            else:
-                flash('Identifiants incorrects. Veuillez réessayer.', 'danger')
-        return render_template('login.html')
-
     @app.route('/logout')
     def logout():
         session.pop('user_id', None)
         return redirect(url_for('index'))
 
-    @app.route('/admin/dashboard')
-    def admin_dashboard():
-        if 'user_id' not in session or not session['is_admin']:
-            abort(403)  # Accès interdit
+    
 

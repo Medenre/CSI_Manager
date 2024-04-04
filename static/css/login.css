@@ -1,0 +1,159 @@
+.container {
+    display: flex;
+    justify-content: space-between; /* Pour espacer les éléments sur les côtés */
+    align-items: center; /* Pour centrer verticalement les éléments */
+    height: 100vh; /* Ajustement de la hauteur pour centrer verticalement */
+    padding: 30 15;
+}
+/* LOGIN FORM */
+.panel-green .panel-heading {
+    border-color: #5cb85c;
+    color: #fff;
+    background-color: #5cb85c;
+}
+
+.panel.tabbed-panel .panel-heading .panel-title{
+    padding: 9px 0;
+    font-size: 1em;
+    line-height: 1em;
+}
+
+.chat-panel .panel-body {
+    height: 350px;
+    overflow-y: scroll;
+}
+
+.panel{
+    margin-right: 5px;
+}
+
+.login-panel {
+    margin-top: 25%;
+}
+
+.btn-circle.btn-lg {
+    width: 50px;
+    height: 50px;
+    padding: 10px 16px;
+    border-radius: 25px;
+    font-size: 18px;
+    line-height: 1.33;
+}
+
+.btn-success.btn-outline {
+    color: #5cb85c;
+}
+
+.btn-primary.btn-outline:hover,
+.btn-success.btn-outline:hover,
+.btn-info.btn-outline:hover,
+.btn-warning.btn-outline:hover,
+.btn-danger.btn-outline:hover {
+    color: #fff;
+}
+
+
+.tabbed-panel.panel-default .nav-tabs > li > a,
+.tabbed-panel.panel-default .nav-tabs > li > a:hover,
+.tabbed-panel.panel-default .nav-tabs > li > a:focus {
+    color: #777;
+}
+.tabbed-panel.panel-default .nav-tabs > .open > a,
+.tabbed-panel.panel-default .nav-tabs > .open > a:hover,
+.tabbed-panel.panel-default .nav-tabs > .open > a:focus,
+.tabbed-panel.panel-default .nav-tabs > li > a:hover,
+.tabbed-panel.panel-default .nav-tabs > li > a:focus {
+    color: #777;
+    background-color: #ddd;
+    border-color: transparent;
+}
+.tabbed-panel.panel-default .nav-tabs > li.active > a,
+.tabbed-panel.panel-default .nav-tabs > li.active > a:hover,
+.tabbed-panel.panel-default .nav-tabs > li.active > a:focus {
+    color: #555;
+    background-color: #fff;
+    border-color: #ddd;
+    border-bottom-color: transparent;
+}
+.tabbed-panel.panel-default .nav-tabs > li.dropdown .dropdown-menu {
+    background-color: #f5f5f5;
+    border-color: #ddd;
+}
+.tabbed-panel.panel-default .nav-tabs > li.dropdown .dropdown-menu > li > a {
+    color: #777;
+}
+.tabbed-panel.panel-default .nav-tabs > li.dropdown .dropdown-menu > li > a:hover,
+.tabbed-panel.panel-default .nav-tabs > li.dropdown .dropdown-menu > li > a:focus {
+    background-color: #ddd;
+}
+.tabbed-panel.panel-default .nav-tabs > li.dropdown .dropdown-menu > .active > a,
+.tabbed-panel.panel-default .nav-tabs > li.dropdown .dropdown-menu > .active > a:hover,
+.tabbed-panel.panel-default .nav-tabs > li.dropdown .dropdown-menu > .active > a:focus {
+    color: #fff;
+    background-color: #555;
+}
+/* LOADER */
+
+.svg-frame {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    transform-style: preserve-3d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    
+  }
+  
+  .svg-frame svg {
+    position: absolute;
+    transition: .5s;
+    z-index: calc(1 - (0.2 * var(--j)));
+    transform-origin: center;
+    width: 344px;
+    height: 344px;
+    fill: none;
+  }
+  
+  .svg-frame:hover svg {
+    transform: rotate(-80deg) skew(30deg) translateX(calc(45px * var(--i))) translateY(calc(-35px * var(--i)));
+  }
+  
+  .svg-frame svg #center {
+    transition: .5s;
+    transform-origin: center;
+  }
+  
+  .svg-frame:hover svg #center {
+    transform: rotate(-30deg) translateX(45px) translateY(-3px);
+  }
+  
+  #out2 {
+    animation: rotate16 7s ease-in-out infinite alternate;
+    transform-origin: center;
+  }
+  
+  #out3 {
+    animation: rotate16 3s ease-in-out infinite alternate;
+    transform-origin: center;
+    stroke: #ff0;
+  }
+  
+  #inner3,
+  #inner1 {
+    animation: rotate16 4s ease-in-out infinite alternate;
+    transform-origin: center;
+  }
+  
+  #center1 {
+    fill: #ff0;
+    animation: rotate16 2s ease-in-out infinite alternate;
+    transform-origin: center;
+  }
+  
+  @keyframes rotate16 {
+    to {
+      transform: rotate(360deg);
+    }
+  }
