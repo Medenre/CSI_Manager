@@ -5,6 +5,7 @@
   <title>CSI Manager | Dashboard</title>
   <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <link rel="stylesheet" href="{{ url_for('static', filename='sidebar.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='card.css')}}">
 
 </head>
 <body>
@@ -79,6 +80,18 @@
 </div>
 <section class="home-section">
   <div class="text">Dashboard</div>
+  <div class="notification">
+    <div class="notiglow"></div>
+    <div class="notiborderglow"></div>
+    <div class="notititle">Welcome To Uiverse</div>
+    <div class="notibody">Contribute to Open Source UI Elements</div>
+  </div>
+  <ul>
+    {% for ticket in tickets %}
+        <li>{{ ticket.title }} </li>
+       <li> {{ ticket.description }}</li>
+    {% endfor %}
+</ul>
 </section>
 <!-- partial -->
   <script  src="{{ url_for('static', filename='sidebar.js')}}"></script>
