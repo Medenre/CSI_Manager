@@ -8,9 +8,6 @@ def init_app(app):  #POUR INIT APP.PY
     @app.route('/')
     def index():
         return render_template('login.html')
-        #POUR AFFICHER LES TICKETS
-        #tickets = Ticket.query.all()
-        #return render_template('index.html', tickets=tickets)
     
     @app.route('/login', methods=['GET', 'POST'])
     def login():
@@ -29,7 +26,8 @@ def init_app(app):  #POUR INIT APP.PY
     
     @app.route('/home')
     def home():
-        return render_template('index.html')
+        tickets = Ticket.query.all()
+        return render_template('index.html' , tickets=tickets)
     
 
     @app.route('/admin/dashboard')
