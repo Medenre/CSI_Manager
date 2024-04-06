@@ -40,13 +40,14 @@ def init_app(app):  #POUR INIT APP.PY
 
     @app.route('/create_ticket', methods=['GET', 'POST'])
     def create_ticket():
-        if 'user_id' not in session:
-            flash('Veuillez vous connecter pour accéder à cette fonctionnalité.', 'warning')
-            return redirect(url_for('login'))
+       # if 'user_id' not in session:
+        #    flash('Veuillez vous connecter pour accéder à cette fonctionnalité.', 'warning')
+         #   return redirect(url_for('login'))
         if request.method == 'POST':
+            username = request.form['username']
             title = request.form['title']
             description = request.form['description']
-            ticket = Ticket(title=title, description=description)
+            ticket = Ticket(username=username, title=title, description=description)
             db.session.add(ticket)
             db.session.commit()
             return redirect(url_for('index'))

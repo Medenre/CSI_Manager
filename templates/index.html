@@ -78,21 +78,25 @@
     </li>
   </ul>
 </div>
+
 <section class="home-section">
   <div class="text">Dashboard</div>
+  <ul>
+  {% for ticket in tickets %}
+  <a href="{{ url_for('view_ticket', ticket_id=ticket.id) }}">
   <div class="notification">
     <div class="notiglow"></div>
     <div class="notiborderglow"></div>
-    <div class="notititle">Welcome To Uiverse</div>
-    <div class="notibody">Contribute to Open Source UI Elements</div>
+    <div class="notititle">{{ ticket.title }}</div>
+    <div class="notibody">{{ ticket.description }}</div>%
+    <div class="notibody">{{ ticket.username }}</div>
   </div>
-  <ul>
-    {% for ticket in tickets %}
-        <li>{{ ticket.title }} </li>
-       <li> {{ ticket.description }}</li>
+  </a>
     {% endfor %}
 </ul>
 </section>
+
+
 <!-- partial -->
   <script  src="{{ url_for('static', filename='sidebar.js')}}"></script>
 

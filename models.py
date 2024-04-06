@@ -4,12 +4,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
-# Fonction pour créer les tables dans la base de données
-def create_tables():
-        db.create_all()
-        
+      
 class Ticket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50))
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)
     status = db.Column(db.String(20), default='Open')
