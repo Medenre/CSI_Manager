@@ -4,11 +4,13 @@ from models import db, User,Ticket
 
 
 def init_app(app):  #POUR INIT APP.PY
-    
+
+    #PAGE D'ACCEUIL
     @app.route('/')
     def index():
         return render_template('login.html')
     
+    #PAGE DASHBOARD
     @app.route('/home')
     def home():
         if 'user_id' not in session:
@@ -17,6 +19,7 @@ def init_app(app):  #POUR INIT APP.PY
         current_user = session.get('username')
         return render_template('index.html' , current_user=current_user)
     
+    #PAGE TICKET
     @app.route('/ticket')
     def ticket():
         if 'user_id' not in session:
@@ -26,6 +29,7 @@ def init_app(app):  #POUR INIT APP.PY
         current_user = session.get('username')
         return render_template('ticket.html', tickets=tickets, current_user=current_user)
     
+    #FONCTION LOGIN
     @app.route('/login', methods=['GET', 'POST'])
     def login():
         if request.method == 'POST':

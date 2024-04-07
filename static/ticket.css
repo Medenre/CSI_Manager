@@ -1,0 +1,6 @@
+.description {
+    max-width: 200px; /* Définissez la largeur maximale de votre colonne description */
+    white-space: nowrap; /* Empêche le texte de se casser sur plusieurs lignes */
+    overflow: hidden; /* Masque le texte qui dépasse la largeur */
+    text-overflow: ellipsis; /* Affiche ... à la fin du texte qui dépasse */
+}

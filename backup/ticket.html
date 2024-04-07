@@ -6,7 +6,6 @@
   <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <link rel="stylesheet" href="{{ url_for('static', filename='sidebar.css')}}">
   <link rel="stylesheet" href="{{ url_for('static', filename='card.css')}}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='ticket.css')}}">
 
 </head>
 <body>
@@ -85,26 +84,19 @@
 
 <section class="home-section">
   <div class="text">Tickets</div>
-  <table>
-    <thead>
-        <tr>
-            <th>Titre</th>
-            <th>Description</th>
-            <th>Statut</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for ticket in tickets %}
-        <tr>
-            <td>{{ ticket.title }}</td>
-            <td class="description">{{ ticket.description }}</td>
-            <td>{{ ticket.status }}</td>
-            <td><a href="{{ url_for('view_ticket', ticket_id=ticket.id) }}">Voir détails</a></td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
+  <ul>
+  {% for ticket in tickets %}
+  <a href="{{ url_for('view_ticket', ticket_id=ticket.id) }}">
+  <div class="notification">
+    <div class="notiglow"></div>
+    <div class="notiborderglow"></div>
+    <div class="notititle">{{ ticket.title }}</div>
+    <div class="notibody">{{ ticket.description }}</div>%
+    <div class="notibody">{{ ticket.username }}</div>
+  </div>
+  </a>
+    {% endfor %}
+</ul>
 </section>
 
 <script  src="{{ url_for('static', filename='sidebar.js')}}"></script>
