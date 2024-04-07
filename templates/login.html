@@ -26,23 +26,19 @@
                 <button>Envoyer</button>
             </form>
 
-            {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
+            <form action="{{url_for('login')}}" method="post" class="form">
+                <div class="title">Connexion</div>
+                <input required="" type="text" placeholder="Identifiant" name="username" class="input">
+                <input required="" type="password" placeholder="Mot de passe" name="password" class="input">
+                <button type="submit">Se connecter</button>
 
-    <form action="{{url_for('login')}}" method="post" class="form">
-        <div class="title">Connexion</div>
-        <input required="" type="text" placeholder="Identifiant" name="username" class="input">
-        <input required="" type="password" placeholder="Mot de passe" name="password" class="input">
-        <button type="submit">Se connecter</button>
-    </form>
-    </div>
+                    {% if error %}
+                    <li class="error-message">{{ error }}</li>
+                    {% endif %}
+
+            </form>
+        </div>
+
     </body>
 
 </html>

@@ -67,3 +67,9 @@
   color: #fff;
   cursor: pointer;
 }
+
+.error-message {
+  color: red; /* Couleur rouge pour le message d'erreur */
+  font-size: 14px; /* Taille de police */
+  margin-top: 5px; /* Marge en haut pour l'espace */
+}

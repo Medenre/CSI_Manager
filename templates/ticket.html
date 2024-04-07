@@ -83,7 +83,7 @@
 </div>
 
 <section class="home-section">
-  <div class="text">Dashboard</div>
+  <div class="text">Tickets</div>
   <ul>
   {% for ticket in tickets %}
   <a href="{{ url_for('view_ticket', ticket_id=ticket.id) }}">

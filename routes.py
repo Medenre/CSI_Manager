@@ -9,6 +9,23 @@ def init_app(app):  #POUR INIT APP.PY
     def index():
         return render_template('login.html')
     
+    @app.route('/home')
+    def home():
+        if 'user_id' not in session:
+           flash('Veuillez vous connecter pour accéder à cette fonctionnalité.', 'warning')
+           return redirect(url_for('index'))
+        current_user = session.get('username')
+        return render_template('index.html' , current_user=current_user)
+    
+    @app.route('/ticket')
+    def ticket():
+        if 'user_id' not in session:
+           flash('Veuillez vous connecter pour accéder à cette fonctionnalité.', 'warning')
+           return redirect(url_for('index'))
+        tickets = Ticket.query.all()
+        current_user = session.get('username')
+        return render_template('ticket.html', tickets=tickets, current_user=current_user)
+    
     @app.route('/login', methods=['GET', 'POST'])
     def login():
         if request.method == 'POST':
@@ -19,18 +36,14 @@ def init_app(app):  #POUR INIT APP.PY
                 session['logged_in'] = True
                 session['user_id'] = user.id
                 session['is_admin'] = user.is_admin  # Stocker si l'utilisateur est un admin
+                session['username'] = user.username  # Stocker le nom de l'utilisateur dans la session
                 return redirect(url_for('home'))
             else:
-                flash('Identifiants incorrects. Veuillez réessayer.', 'danger')
-        return render_template('login.html')
-    
-    @app.route('/home')
-    def home():
-        tickets = Ticket.query.all()
-        return render_template('index.html' , tickets=tickets)
+                error = "Identifiant ou mot de passe incorrect."
+        return render_template('login.html', error=error)
     
 
-    @app.route('/admin/dashboard')
+    @app.route('/admin/dashboard')  
     def admin_dashboard():
         if 'user_id' not in session or not session['is_admin']:
             abort(403)  # Accès interdit$
