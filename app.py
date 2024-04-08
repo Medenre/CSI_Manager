@@ -9,12 +9,6 @@ app.config['SECRET_KEY'] = b'\x97\xfd\xb8\x98j-\xd1;$\xbb\xe2Z\xc6\x0c\x87t' #py
 
 # Initialise la base de données
 db.init_app(app)
-migrate = Migrate(app,db)
-
-from models import Ticket
-
-def create_tables():
-    db.create_all()
 
 # Initialise les routes 
 init_app(app)

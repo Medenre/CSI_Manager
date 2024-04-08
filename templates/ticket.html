@@ -88,6 +88,8 @@
   <table>
     <thead>
         <tr>
+            <th>Utilisateur</th>
+            <th>Date</th>
             <th>Titre</th>
             <th>Description</th>
             <th>Statut</th>
@@ -96,6 +98,8 @@
     <tbody>
         {% for ticket in tickets %}
         <tr>
+            <td>{{ticket.username}}</td>
+            <td>{{ ticket.date }}</td>
             <td>{{ ticket.title }}</td>
             <td class="description">{{ ticket.description }}</td>
             <td>{{ ticket.status }}</td>

@@ -1,7 +1,6 @@
 from flask import render_template, request, abort, redirect, url_for, session, flash
-
 from models import db, User,Ticket
-
+from datetime import datetime
 
 def init_app(app):  #POUR INIT APP.PY
 
@@ -64,11 +63,13 @@ def init_app(app):  #POUR INIT APP.PY
             username = request.form['username']
             title = request.form['title']
             description = request.form['description']
-            ticket = Ticket(username=username, title=title, description=description)
+            current_date = datetime.utcnow()
+            formatted_date = current_date.strftime("%d-%m-%Y")
+            ticket = Ticket(username=username, title=title, description=description, date=formatted_date)
             db.session.add(ticket)
             db.session.commit()
             return redirect(url_for('index'))
-        return render_template('create_ticket.html')
+        #return render_template('create_ticket.html')
 
     @app.route('/respond_ticket/<int:ticket_id>', methods=['GET', 'POST'])
     def respond_ticket(ticket_id):
