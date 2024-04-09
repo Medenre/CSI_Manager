@@ -10,9 +10,10 @@ class Ticket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.String(10))
     username = db.Column(db.String(50))
+    location = db.Column(db.String(50))
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)
-    status = db.Column(db.String(20), default='Open')
+    status = db.Column(db.String(20), default='Ouvert')
     is_admin_response = db.Column(db.Boolean, default=False)
     admin_response = db.Column(db.Text)
 

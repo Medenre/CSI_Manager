@@ -61,11 +61,12 @@ def init_app(app):  #POUR INIT APP.PY
          #   return redirect(url_for('login'))
         if request.method == 'POST':
             username = request.form['username']
+            location = request.form['location']
             title = request.form['title']
             description = request.form['description']
             current_date = datetime.utcnow()
             formatted_date = current_date.strftime("%d-%m-%Y")
-            ticket = Ticket(username=username, title=title, description=description, date=formatted_date)
+            ticket = Ticket(username=username, location=location, title=title, description=description, date=formatted_date)
             db.session.add(ticket)
             db.session.commit()
             return redirect(url_for('index'))

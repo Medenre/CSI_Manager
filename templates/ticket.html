@@ -83,34 +83,69 @@
   </ul>
 </div>
 
-<section class="home-section">
-  <div class="text">Tickets</div>
-  <table>
-    <thead>
-        <tr>
-            <th>Utilisateur</th>
-            <th>Date</th>
-            <th>Titre</th>
-            <th>Description</th>
-            <th>Statut</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for ticket in tickets %}
-        <tr>
-            <td>{{ticket.username}}</td>
-            <td>{{ ticket.date }}</td>
-            <td>{{ ticket.title }}</td>
-            <td class="description">{{ ticket.description }}</td>
-            <td>{{ ticket.status }}</td>
-            <td><a href="{{ url_for('view_ticket', ticket_id=ticket.id) }}">Voir détails</a></td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<main class="table" id="customers_table">
+    <section class="table__header">
+        <h1>Liste des tickets</h1>
+        <div class="input-group">
+            <input type="search" placeholder="Rechercher un ticket...">
+            <img src="{{ url_for('static', filename='images/search.png') }}" alt="">
+        </div>
+       <!-- <div class="export__file">
+            <label for="export-file" class="export__file-btn" title="Export File"></label>
+            <input type="checkbox" id="export-file">
+            <div class="export__file-options">
+                <label>Exporter vers &nbsp; &#10140;</label>
+                <label for="export-file" id="toPDF">PDF <img src="{{ url_for('static', filename='images/pdf.png') }}" alt=""></label>
+                <label for="export-file" id="toJSON">JSON <img src="{{ url_for('static', filename='images/json.png') }}" alt=""></label>
+                <label for="export-file" id="toCSV">CSV <img src="{{ url_for('static', filename='images/csv.png') }}" alt=""></label>
+                <label for="export-file" id="toEXCEL">EXCEL <img src="{{ url_for('static', filename='images/excel.png') }}" alt=""></label>
+            </div>
+        </div> -->
+    </section>
+    <section class="table__body">
+        <table>
+            <thead>
+                <tr>
+                    <th> Id <span class="icon-arrow">&UpArrow;</span></th>
+                    <th> Utilisateurs <span class="icon-arrow">&UpArrow;</span></th>
+                    <th> Localisation <span class="icon-arrow">&UpArrow;</span></th>
+                    <th> Sujet <span class="icon-arrow">&UpArrow;</span></th>
+                    <th> Date <span class="icon-arrow">&UpArrow;</span></th>
+                    <th> Statue <span class="icon-arrow">&UpArrow;</span></th>
+                    <th> Détails </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in tickets %}
+                <tr>
+                    <td>{{ticket.id}}</td>
+                    <td>{{ticket.username}}</td>
+                    <td>{{ticket.location}}</td>
+                    <td>{{ticket.title}}</td>
+                    <td>{{ticket.date}}</td>
+                    <td>
+                        {% if ticket.status == 'Ouvert' %}
+                            <p class="status shipped">{{ ticket.status }}</p>
+                        {% elif ticket.status == 'Fermer' %}
+                            <p class="status delivered">{{ ticket.status }}</p>
+                        {% elif ticket.status == 'En cours' %}
+                            <p class="status pending">{{ ticket.status }}</p>
+                        {% else %}
+                            <p class="status cancelled">{{ ticket.status }}</p>
+                        {% endif %}
+                    </td>
+                    <td><a href="{{ url_for('view_ticket', ticket_id=ticket.id) }}">Voir détails</a></td>
+                
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</main>
 
-</section>
-
+    
+  
+<script  src="{{ url_for('static', filename='ticket.js')}}"></script>
 <script  src="{{ url_for('static', filename='sidebar.js')}}"></script>
 
 </body>
