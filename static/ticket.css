@@ -39,6 +39,7 @@ Code written by:
 
 body {
     min-height: 100vh;
+    background: url("{{ url_for('static', filename='images/html_table.jpg') }}") center/cover;
     display: flex;
     justify-content: center;
     align-items: center;
