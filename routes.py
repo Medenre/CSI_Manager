@@ -1,5 +1,5 @@
 from flask import render_template, request, abort, redirect, url_for, session, flash
-from models import db, User,Ticket
+from models import db, User,Ticket, Location
 from datetime import datetime
 
 def init_app(app):  #POUR INIT APP.PY
@@ -7,7 +7,8 @@ def init_app(app):  #POUR INIT APP.PY
     #PAGE D'ACCEUIL
     @app.route('/')
     def index():
-        return render_template('login.html')
+        locations = Location.query.all()
+        return render_template('login.html', locations = locations)
     
     #PAGE DASHBOARD
     @app.route('/home')
@@ -66,7 +67,9 @@ def init_app(app):  #POUR INIT APP.PY
             description = request.form['description']
             current_date = datetime.utcnow()
             formatted_date = current_date.strftime("%d-%m-%Y")
+            
             ticket = Ticket(username=username, location=location, title=title, description=description, date=formatted_date)
+            
             db.session.add(ticket)
             db.session.commit()
             return redirect(url_for('index'))

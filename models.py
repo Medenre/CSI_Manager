@@ -17,6 +17,10 @@ class Ticket(db.Model):
     is_admin_response = db.Column(db.Boolean, default=False)
     admin_response = db.Column(db.Text)
 
+class Location(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    rooms = db.Column(db.Text)
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)

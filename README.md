@@ -11,3 +11,13 @@ To run this application:
 ```
 flask --debug run
 ```
+Déploiement : 
+Path bdd
+
+    2  pip install flask
+    5  pip install sqlalchemy
+   26  pip install Werkzeug
+   27  pip show Werkzeug
+   28  
+
+'sqlite:////home/Medenre/CSI_Manager/instance/data.db'
