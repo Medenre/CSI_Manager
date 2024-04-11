@@ -126,7 +126,7 @@
                     <td>
                         {% if ticket.status == 'Ouvert' %}
                             <p class="status shipped">{{ ticket.status }}</p>
-                        {% elif ticket.status == 'Fermer' %}
+                        {% elif ticket.status == 'Clôturer' %}
                             <p class="status delivered">{{ ticket.status }}</p>
                         {% elif ticket.status == 'En cours' %}
                             <p class="status pending">{{ ticket.status }}</p>

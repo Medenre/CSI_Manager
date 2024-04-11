@@ -1,5 +1,5 @@
 from flask import render_template, request, abort, redirect, url_for, session, flash
-from models import db, User,Ticket, Location
+from models import db, User,Ticket,Location
 from datetime import datetime
 
 def init_app(app):  #POUR INIT APP.PY
@@ -62,13 +62,13 @@ def init_app(app):  #POUR INIT APP.PY
          #   return redirect(url_for('login'))
         if request.method == 'POST':
             username = request.form['username']
-            location = request.form['location']
+            location_name = request.form['location']
             title = request.form['title']
             description = request.form['description']
             current_date = datetime.utcnow()
             formatted_date = current_date.strftime("%d-%m-%Y")
-            
-            ticket = Ticket(username=username, location=location, title=title, description=description, date=formatted_date)
+
+            ticket = Ticket(username=username, location=location_name, title=title, description=description, date=formatted_date)
             
             db.session.add(ticket)
             db.session.commit()

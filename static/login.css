@@ -73,3 +73,54 @@
   font-size: 14px; /* Taille de police */
   margin-top: 5px; /* Marge en haut pour l'espace */
 }
+
+/* SELECT BOX */
+
+
+.custom-select {
+  position: relative;
+  width: 100%;
+
+}
+
+.custom-select select option[value=""] {
+  color: gray;
+}
+
+
+.custom-select select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  font-size: 15px;
+  padding: 5px 11px 5px 11px;
+  background-color: #fefefe;
+  border: 1px solid rgb(219, 213, 213);
+  border-radius: 5px;
+  
+  cursor: pointer;
+  outline: none;
+}
+
+.custom-select select:focus {
+  background: #fefefe;
+  border: 1px solid rgb(219, 213, 213);
+  border-radius: 5px;
+}
+
+.custom-select::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  top: 50%;
+  right: 8px; /* Ajustement de la position */
+  transform: translateY(-50%);
+  width: 19px;
+  height: 19px;
+  background-color: #000000;
+  clip-path: polygon(8% 17%, 0% 25%, 50% 84%, 100% 25%, 92% 17%, 50% 65%);
+}
+
+
+
+
