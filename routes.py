@@ -87,6 +87,17 @@ def init_app(app):  #POUR INIT APP.PY
             return redirect(url_for('index'))
         return render_template('respond_ticket.html', ticket=ticket)
 
+    @app.route('/diagramme')
+    def diagramme():
+        # Récupérer les données de la base de données
+        open_tickets = Ticket.query.filter_by(status='Ouvert').count()
+        closed_tickets = Ticket.query.filter_by(status='Fermer').count()
+        in_progress_tickets = Ticket.query.filter_by(status='En cours').count()
+        resolved_tickets = Ticket.query.filter_by(status='Clôturer').count()
+
+        # Transmettre les données au modèle HTML
+        return render_template('diagramme.html', open_tickets=open_tickets, closed_tickets=closed_tickets, in_progress_tickets=in_progress_tickets, resolved_tickets=resolved_tickets)
+        
     @app.route('/ticket/<int:ticket_id>')
     def view_ticket(ticket_id):
         ticket = Ticket.query.get_or_404(ticket_id)
