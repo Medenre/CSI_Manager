@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagramme Circulaire</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+</head>
+<body>
+<p>{{ open_tickets }}</p>
+<p>{{ closed_tickets }}</p>
+<p>{{ in_progress_tickets }}</p>
+<p>{{ resolved_tickets }}</p>
+<canvas id="pieChart" style="width: 100%; max-width: 600px; height: auto;"></canvas>
+    <script>
+        // Récupérer les données passées par Flask
+let openTickets = parseFloat("{{ open_tickets }}");
+let closedTickets = parseInt("{{ closed_tickets }}");         
+let inProgressTickets = parseInt("{{ in_progress_tickets }}");
+let resolvedTickets = parseInt("{{ resolved_tickets }}");
+
+// Créer un tableau de données
+let data = {
+    labels: ['Ouverts', 'Fermés', 'En cours', 'Clôturés'],
+    datasets: [{
+        data: [openTickets, closedTickets, inProgressTickets, resolvedTickets],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+    }]
+};
+
+// Configuration du diagramme
+let options = {
+    tooltips: {
+        callbacks: {
+            label: function(tooltipItem, data) {
+                let dataset = data.datasets[tooltipItem.datasetIndex];
+                let total = dataset.data.reduce((previousValue, currentValue, currentIndex, array) => {
+                    return previousValue + currentValue;
+                });
+                let currentValue = dataset.data[tooltipItem.index];
+                let percentage = Math.floor(((currentValue / total) * 100) + 0.5);         
+                return percentage + "%";
+            }
+        }
+    },
+    responsive: true,
+    maintainAspectRatio: true,
+};
+
+// Création du diagramme
+let ctx = document.getElementById('pieChart').getContext('2d');
+let myPieChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: data,
+    options: options
+});
+
+    </script>
+</body>
+</html>

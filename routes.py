@@ -1,6 +1,7 @@
 from flask import render_template, request, abort, redirect, url_for, session, flash
 from models import db, User,Ticket,Location
 from datetime import datetime
+import pygal
 
 def init_app(app):  #POUR INIT APP.PY
 
@@ -86,6 +87,7 @@ def init_app(app):  #POUR INIT APP.PY
             db.session.commit()
             return redirect(url_for('index'))
         return render_template('respond_ticket.html', ticket=ticket)
+
 
     @app.route('/diagramme')
     def diagramme():
