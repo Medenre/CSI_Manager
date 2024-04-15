@@ -5,8 +5,8 @@
   <title>CSI Manager | Dashboard</title>
   <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <link rel="stylesheet" href="{{ url_for('static', filename='sidebar.css')}}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='card.css')}}">
-
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css')}}">
+  <script src="{{ url_for('static', filename='node_modules/chart.js/dist/chart.umd.js') }}"></script>
 </head>
 <body>
 <!-- partial:index.partial.html -->
@@ -78,28 +78,27 @@
       <i class='bx bx-log-out' id="log_out"></i>
     </a>
     </li>
-
   </ul>
 </div>
 
+
+
 <section class="home-section">
   <div class="text">Dashboard</div>
-  <ul>
-  {% for ticket in tickets %}
-  <a href="{{ url_for('view_ticket', ticket_id=ticket.id) }}">
-  <div class="notification">
-    <div class="notiglow"></div>
-    <div class="notiborderglow"></div>
-    <div class="notititle">{{ ticket.title }}</div>
-    <div class="notibody">{{ ticket.description }}</div>%
-    <div class="notibody">{{ ticket.username }}</div>
-  </div>
-  </a>
-    {% endfor %}
-</ul>
+    
+<!-- ----------------------CANVAS TICKET-------------------------------------------- -->  
+    <div id="open_tickets" style="display:none">{{ open_tickets }}</div>
+    <div id="closed_tickets" style="display:none">{{ closed_tickets }}</div>
+    <div id="in_progress_tickets" style="display:none">{{ in_progress_tickets }}</div>
+    <div id="resolved_tickets" style="display:none">{{ resolved_tickets }}</div>
+    <canvas id="pieChart"></canvas>
+    <script src="{{ url_for('static', filename='stat.js') }}"></script>
+    
 </section>
 
-<script  src="{{ url_for('static', filename='sidebar.js')}}"></script>
 
+
+
+<script  src="{{ url_for('static', filename='sidebar.js')}}"></script>
 </body>
 </html>

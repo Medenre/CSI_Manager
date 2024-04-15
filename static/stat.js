@@ -1,50 +1,81 @@
-        // Récupérer les données passées par Flask
-        let openTickets = parseInt("{{ open_tickets }}");
-        let closedTickets = parseInt("{{ closed_tickets }}");
-        let inProgressTickets = parseInt("{{ in_progress_tickets }}");
-        let resolvedTickets = parseInt("{{ resolved_tickets }}");
+  // Récupérer les données passées par Flask
+const openTickets = document.getElementById('open_tickets').innerText;
+const closedTickets = document.getElementById('closed_tickets').innerText;
+const inProgressTickets = document.getElementById('in_progress_tickets').innerText;
+const resolvedTickets = document.getElementById('resolved_tickets').innerText;
 
-        // Créer un tableau de données
-        let data = {
-            labels: ['Ouverts', 'Fermés', 'En cours', 'Clôturés'],
-            datasets: [{
-                data: [openTickets, closedTickets, inProgressTickets, resolvedTickets],
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
-            }]
-        };
 
-        // Configuration du diagramme
-        let options = {
-            cutoutPercentage: 70, // Pourcentage du rayon intérieur (0-100)
-            tooltips: {
-                callbacks: {
-                    label: function(tooltipItem, data) {
-                        let dataset = data.datasets[tooltipItem.datasetIndex];
-                        let total = dataset.data.reduce((previousValue, currentValue, currentIndex, array) => {
-                            return previousValue + currentValue;
-                        });
-                        let currentValue = dataset.data[tooltipItem.index];
-                        let percentage = Math.floor(((currentValue / total) * 100) + 0.5);         
-                        return percentage + "%";
-                    }
-                }
-            },
-            responsive: true,
-            maintainAspectRatio: false
+  // Créer un tableau de données
+  let data = {
+      labels: ['Ouverts', 'Fermés', 'En cours', 'Clôturés'],
+      datasets: [{
+          data: [openTickets, closedTickets, inProgressTickets, resolvedTickets],
+          backgroundColor: ['#FFCE56', '#FF6384', '#36A2EB', '#4BC0C0']
+      }]
+  };
+
+  // Configuration du diagramme
+  let options = {
+      cutout: 50,
+      plugins: {
+        textInside: {
+          text: "Total: " + (parseInt(openTickets) + parseInt(closedTickets) + parseInt(inProgressTickets) + parseInt(resolvedTickets)),
+          color: 'black',
+          fontSize: 20
+        },
+        legend: {
+          display: true,
+          position: "left",
+          align: "center",
             
-        };
+            labels:{
+                boxHeight:20,
+                maxHeight: 30,
+            }        
+        },
+        title: {
+          display: true,
+          position: "top",
+          text: "Tickets",
+          padding: {
+            top: 5,
+            bottom: 10
+        },
+            font:{
+                size:30,
+            }  
+        }
+      }
+    };
 
-        // Sélectionnez l'élément canvas
-        let canvas = document.getElementById('pieChart');
+  Chart.register({
+      id: 'textInside',
+      afterDatasetsDraw: function (chart, _) {
+          const ctx = chart.ctx;
+          const width = chart.width;
+          const height = chart.height;
+          const fontSize = options.plugins.textInside.fontSize;
+          ctx.font = fontSize + 'px Arial';
+          ctx.fillStyle = options.plugins.textInside.color;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          const text = options.plugins.textInside.text;
+          const textX =  257//Math.round(width / 1.6);
+          const textY = 133//Math.round(height / 2);
+          ctx.fillText(text, textX, textY);
+      }
+  });
 
-        // Modifiez la taille du canvas
-        canvas.width = 400; // Nouvelle largeur
-        canvas.height = 350; // Nouvelle hauteur
+  // Sélectionnez l'élément canvas
+  let canvas = document.getElementById('pieChart');
 
-        // Création du diagramme
-        let ctx = canvas.getContext('2d');
-        let myPieChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: data,
-            options: options
-        });
+  // Création du diagramme
+  const ctx = canvas.getContext('2d');
+  const myPieChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: data,
+      options: options,
+      responsive: true,
+      maintainAspectRatio: true,
+      
+  });

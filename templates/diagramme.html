@@ -5,70 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diagramme Circulaire</title>
     <script src="{{ url_for('static', filename='node_modules/chart.js/dist/chart.umd.js') }}"></script>
-    <script src="{{ url_for('static', filename='chartjs-plugin-doughnutlabel.js') }}"></script>
 </head>
 <body>
-    <canvas id="pieChart" style="width: 100%; max-width: 600px; height: 600px;"></canvas>
+    <div id="open_tickets" style="display:none">{{ open_tickets }}</div>
+    <div id="closed_tickets" style="display:none">{{ closed_tickets }}</div>
+    <div id="in_progress_tickets" style="display:none">{{ in_progress_tickets }}</div>
+    <div id="resolved_tickets" style="display:none">{{ resolved_tickets }}</div>
 
-    <script>
-        // Récupérer les données passées par Flask
-        let openTickets = parseInt("{{ open_tickets }}");
-        let closedTickets = parseInt("{{ closed_tickets }}");
-        let inProgressTickets = parseInt("{{ in_progress_tickets }}");
-        let resolvedTickets = parseInt("{{ resolved_tickets }}");
+    <canvas id="pieChart" style="width: 100%; max-width: 250px; height: 100%; max-height: 250px"></canvas>
 
-        // Créer un tableau de données
-        let data = {
-            labels: ['Ouverts', 'Fermés', 'En cours', 'Clôturés'],
-            datasets: [{
-                data: [openTickets, closedTickets, inProgressTickets, resolvedTickets],
-                backgroundColor: ['#FFCE56', '#FF6384', '#36A2EB', '#4BC0C0']
-            }]
-        };
+    <script src="{{ url_for('static', filename='stat.js') }}"></script>
 
-        // Configuration du diagramme
-        let options = {
-            plugins: {
-                textInside: {
-                    text: "Total: " + (openTickets + closedTickets + inProgressTickets + resolvedTickets),
-                    color: 'black',
-                    fontSize: 20
-                }
-            }
-        };
-
-        Chart.register({
-            id: 'textInside',
-            afterDatasetsDraw: function (chart, _) {
-                const ctx = chart.ctx;
-                const width = chart.width;
-                const height = chart.height;
-                const fontSize = options.plugins.textInside.fontSize;
-                ctx.font = fontSize + 'px Arial';
-                ctx.fillStyle = options.plugins.textInside.color;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                const text = options.plugins.textInside.text;
-                const textX = Math.round(width / 2);
-                const textY = Math.round(height / 2);
-                ctx.fillText(text, textX, textY);
-            }
-        });
-
-        // Sélectionnez l'élément canvas
-        let canvas = document.getElementById('pieChart');
-
-  
-
-        // Création du diagramme
-        const ctx = canvas.getContext('2d');
-        const myPieChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: data,
-            options: options,
-            responsive: true,
-            maintainAspectRatio: false
-        });
-    </script>
 </body>
 </html>
