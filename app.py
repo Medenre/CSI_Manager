@@ -1,7 +1,6 @@
 from flask import Flask
 from models import db
 from routes import init_app 
-from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
