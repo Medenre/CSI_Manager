@@ -93,11 +93,17 @@ def init_app(app):  #POUR INIT APP.PY
             return redirect(url_for('index'))
         return render_template('respond_ticket.html', ticket=ticket)
 
+    #PAGE TICKET
+    @app.route('/materiel')
+    def materiel():
+        if 'user_id' not in session:
+           flash('Veuillez vous connecter pour accéder à cette fonctionnalité.', 'warning')
+           return redirect(url_for('index'))
+        current_user = session.get('username')
+        return render_template('materiel.html', current_user=current_user)
 
     @app.route('/diagramme')
     def diagramme():
-        
-
         # Transmettre les données au modèle HTML
         return render_template('diagramme.html', open_tickets=open_tickets, closed_tickets=closed_tickets, in_progress_tickets=in_progress_tickets, resolved_tickets=resolved_tickets)
         
