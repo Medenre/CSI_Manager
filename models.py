@@ -21,6 +21,13 @@ class Location(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     rooms = db.Column(db.Text)
 
+class Materiel(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    designation = db.Column(db.String(100))
+    username = db.Column(db.String(50))
+    serial = db.Column(db.Text)
+    last_modif = db.Column(db.String(20))
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)

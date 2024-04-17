@@ -1,5 +1,5 @@
 from flask import render_template, request, abort, redirect, url_for, session, flash
-from models import db, User,Ticket,Location
+from models import db, User,Ticket,Location,Materiel
 from datetime import datetime
 
 def init_app(app):  #POUR INIT APP.PY
@@ -100,7 +100,10 @@ def init_app(app):  #POUR INIT APP.PY
            flash('Veuillez vous connecter pour accéder à cette fonctionnalité.', 'warning')
            return redirect(url_for('index'))
         current_user = session.get('username')
-        return render_template('materiel.html', current_user=current_user)
+
+        materiel = Materiel.query.all()
+
+        return render_template('materiel.html', current_user=current_user, Materiel=Materiel)
 
     @app.route('/diagramme')
     def diagramme():
