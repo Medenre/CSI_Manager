@@ -60,7 +60,7 @@ const resolvedTickets = document.getElementById('resolved_tickets').innerText;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           const text = options.plugins.textInside.text;
-          const textX =  257//Math.round(width / 1.6);
+          const textX =  257//Math.round(width / 2);
           const textY = 133//Math.round(height / 2);
           ctx.fillText(text, textX, textY);
       }
