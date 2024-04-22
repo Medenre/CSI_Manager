@@ -6,7 +6,30 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-.sidebar {
+
+/* Utilisation d'un sélecteur CSS plus spécifique  pour materiel*/
+.sidebar .nav-list li ul.sub-menu a {
+  color: #fff;
+  background-color: #1d1b31;
+  display: block;
+  padding: 10px; /* Espacement intérieur */
+  text-decoration: none;
+}
+
+/* Au survol  materiel*/
+.sidebar .nav-list li ul.sub-menu a:hover {
+  color: #11101d;
+  background-color: #fff;
+}
+
+.sub-menu {
+  width: 222px;
+}
+.hide {
+  display: none;
+}
+
+.sidebar{
   position: fixed;
   left: 0;
   top: 0;

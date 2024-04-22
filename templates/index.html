@@ -51,11 +51,16 @@
       <span class="tooltip">Statistiques</span>
     </li>
     <li>
-      <a href="{{ url_for('materiel') }}">
-        <i class='bx bx-folder'></i>
+      <a href="#">
+        <i class="bx bx-folder"></i>
         <span class="links_name">Matériels</span>
       </a>
       <span class="tooltip">Matériels</span>
+      <ul class="sub-menu hide">
+        <li><a href="{{ url_for('materiel') }}">Gestion matériel informatique</a></li>
+        <li><a href="#">Sous-menu 2</a></li>
+        <!-- Ajoutez autant d'éléments de sous-menu que nécessaire -->
+      </ul>
     </li>
     <li>
       <a href="#">
@@ -78,6 +83,7 @@
       <i class='bx bx-log-out' id="log_out"></i>
     </a>
     </li>
+
   </ul>
 </div>
 

@@ -5,7 +5,6 @@
   <title>CSI Manager | Dashboard</title>
   <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <link rel="stylesheet" href="{{ url_for('static', filename='sidebar.css')}}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='card.css')}}">
   <link rel="stylesheet" href="{{ url_for('static', filename='ticket.css')}}">
 
 </head>
@@ -52,11 +51,16 @@
       <span class="tooltip">Statistiques</span>
     </li>
     <li>
-      <a href="{{ url_for('materiel') }}">
-        <i class='bx bx-folder'></i>
+      <a href="#">
+        <i class="bx bx-folder"></i>
         <span class="links_name">Matériels</span>
       </a>
       <span class="tooltip">Matériels</span>
+      <ul class="sub-menu hide">
+        <li><a href="{{ url_for('materiel') }}">Gestion matériel informatique</a></li>
+        <li><a href="#">Sous-menu 2</a></li>
+        <!-- Ajoutez autant d'éléments de sous-menu que nécessaire -->
+      </ul>
     </li>
     <li>
       <a href="#">
@@ -82,12 +86,13 @@
 
   </ul>
 </div>
+
 <body>
 <main class="table" id="customers_table">
     <section class="table__header">
-        <h1>Liste des tickets</h1>
+        <h1>Gestion du matériel informatique</h1>
         <div class="input-group">
-            <input type="search" placeholder="Rechercher un ticket...">
+            <input type="search" placeholder="Rechercher du materiel...">
             <img src="{{ url_for('static', filename='images/search.png') }}" alt="">
         </div>
        <!-- <div class="export__file">
@@ -107,12 +112,13 @@
             <thead>
                 <tr>
                     <th> Id <span class="icon-arrow">&UpArrow;</span></th>
-                    <th> Utilisateurs <span class="icon-arrow">&UpArrow;</span></th>
+                    <th> Marque <span class="icon-arrow">&UpArrow;</span></th>
+                    <th> Modèle <span class="icon-arrow">&UpArrow;</span></th>
+                    <th> @mac <span class="icon-arrow">&UpArrow;</span></th>
+                    <th> @IP  <span class="icon-arrow">&UpArrow;</span></th>
                     <th> Localisation <span class="icon-arrow">&UpArrow;</span></th>
-                    <th> Sujet <span class="icon-arrow">&UpArrow;</span></th>
-                    <th> Date <span class="icon-arrow">&UpArrow;</span></th>
-                    <th> Statut <span class="icon-arrow">&UpArrow;</span></th>
-                    <th> Détails </th>
+                    <th> Utilisateurs  <span class="icon-arrow">&UpArrow;</span></th>
+                    <th> Date modif  <span class="icon-arrow">&UpArrow;</span></th>
                 </tr>
             </thead>
             <tbody>
