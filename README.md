@@ -14,10 +14,10 @@ flask --debug run
 Déploiement : 
 Path bdd
 
-    2  pip install flask
-    5  pip install sqlalchemy
-   26  pip install Werkzeug
-   27  pip show Werkzeug
-   28  
+pip install flask
+pip install sqlalchemy
+pip install Werkzeug
+pip show Werkzeug
+    
 
 'sqlite:////home/Medenre/CSI_Manager/instance/data.db'
