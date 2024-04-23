@@ -5,7 +5,8 @@
   <title>CSI Manager | Dashboard</title>
   <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <link rel="stylesheet" href="{{ url_for('static', filename='sidebar.css')}}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='ticket.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='gmi.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='modal_gmi.css')}}">
 
 </head>
 
@@ -108,51 +109,92 @@
         </div> -->
     </section>
     <section class="table__body">
+
+      <button id="addMaterialButton" type="button" class="button">
+        <div class="button-top">Ajouter du matériel</div>
+        <div class="button-bottom"></div>
+        <div class="button-base"></div>
+      </button>
+      
         <table>
-            <thead>
-                <tr>
-                    <th> Id <span class="icon-arrow">&UpArrow;</span></th>
-                    <th> Marque <span class="icon-arrow">&UpArrow;</span></th>
-                    <th> Modèle <span class="icon-arrow">&UpArrow;</span></th>
-                    <th> @mac <span class="icon-arrow">&UpArrow;</span></th>
-                    <th> @IP  <span class="icon-arrow">&UpArrow;</span></th>
-                    <th> Localisation <span class="icon-arrow">&UpArrow;</span></th>
-                    <th> Utilisateurs  <span class="icon-arrow">&UpArrow;</span></th>
-                    <th> Date modif  <span class="icon-arrow">&UpArrow;</span></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for ticket in tickets %}
-                <tr>
-                    <td>{{ticket.id}}</td>
-                    <td>{{ticket.username}}</td>
-                    <td>{{ticket.location}}</td>
-                    <td>{{ticket.title}}</td>
-                    <td>{{ticket.date}}</td>
-                    <td>
-                        {% if ticket.status == 'Ouvert' %}
-                            <p class="status shipped">{{ ticket.status }}</p>
-                        {% elif ticket.status == 'Clôturer' %}
-                            <p class="status delivered">{{ ticket.status }}</p>
-                        {% elif ticket.status == 'En cours' %}
-                            <p class="status pending">{{ ticket.status }}</p>
-                        {% else %}
-                            <p class="status cancelled">{{ ticket.status }}</p>
-                        {% endif %}
-                    </td>
-                    <td><a href="{{ url_for('view_ticket', ticket_id=ticket.id) }}">Voir détails</a></td>
-                
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+          <thead>
+              <tr>
+                  <th> Id <span class="icon-arrow">&UpArrow;</span></th>
+                  <th> Marque <span class="icon-arrow">&UpArrow;</span></th>
+                  <th> Modèle <span class="icon-arrow">&UpArrow;</span></th>
+                  <th> @mac <span class="icon-arrow">&UpArrow;</span></th>
+                  <th> @IP  <span class="icon-arrow">&UpArrow;</span></th>
+                  <th> Localisation <span class="icon-arrow">&UpArrow;</span></th>
+                  <th> Utilisateurs  <span class="icon-arrow">&UpArrow;</span></th>
+                  <th> Date modif  <span class="icon-arrow">&UpArrow;</span></th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for materiel in materiels %}
+              <tr>
+                  <td>{{materiel.id}}</td>
+                  <td>{{materiel.marque}}</td>
+                  <td>{{materiel.mac}}</td>
+                  <td>{{materiel.ip}}</td>
+                  <td>{{materiel.location}}</td>
+                  <td>{{materiel.username}}</td>
+                  <td>{{materiel.last_modif}}</td>
+              </tr>
+              {% endfor %}
+          </tbody> 
+      </table>
     </section>
+    
 </main>
 
-    
+  <!-- Modal -->
+  <div id="addMaterialModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Ajouter du matériel</h2>
+        <!-- Formulaire pour ajouter du matériel -->
+        <form id="addMaterialForm">
+
+        <select required="" name="location" class="input">
+            <option value="">Sélectionner une localisation </option>
+            {% for location in locations %}
+                <option value="{{ location.rooms }}">{{ location.rooms }}</option>
+            {% endfor %}
+        </select>
+
+            <!-- Ajoutez vos champs de formulaire ici -->
+        </form>
+    </div>
+</div>  
   
 <script  src="{{ url_for('static', filename='ticket.js')}}"></script>
 <script  src="{{ url_for('static', filename='sidebar.js')}}"></script>
+<script>
+  // Récupérer le modal
+  var modal = document.getElementById('addMaterialModal');
 
+  // Récupérer le bouton qui ouvre le modal
+  var btn = document.getElementById("addMaterialButton");
+
+  // Récupérer l'élément span qui ferme le modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // Quand l'utilisateur clique sur le bouton, ouvrir le modal
+  btn.onclick = function() {
+      modal.style.display = "block";
+  }
+
+  // Quand l'utilisateur clique sur <span> (x), fermer le modal
+  span.onclick = function() {
+      modal.style.display = "none";
+  }
+
+  // Quand l'utilisateur clique n'importe où en dehors du modal, fermer le modal
+  window.onclick = function(event) {
+      if (event.target == modal) {
+          modal.style.display = "none";
+      }
+  }
+</script>
 </body>
 </html>

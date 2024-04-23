@@ -102,8 +102,9 @@ def init_app(app):  #POUR INIT APP.PY
         current_user = session.get('username')
 
         materiel = Materiel.query.all()
+        locations = Location.query.all()
 
-        return render_template('materiel.html', current_user=current_user, Materiel=Materiel)
+        return render_template('materiel.html', current_user=current_user, materiel=materiel, locations=locations)
 
     @app.route('/diagramme')
     def diagramme():
