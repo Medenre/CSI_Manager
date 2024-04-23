@@ -159,16 +159,39 @@
         <span class="close">&times;</span>
         <h2>Ajouter du matériel</h2>
         <!-- Formulaire pour ajouter du matériel -->
-        <form id="addMaterialForm">
+        <form id="addMaterialForm" class="form-grid">
+        
+          <div class="input-group">
+            <input required="" type="text" name="text" autocomplete="off" class="input">
+            <label class="user-label">Désignation</label>
+          </div>
+          <div class="input-group">
+            <input required="" type="text" name="text" autocomplete="off" class="input">
+            <label class="user-label">Marque</label>
+          </div>
+          <div class="input-group">
+            <input required="" type="text" name="text" autocomplete="off" class="input">
+            <label class="user-label">Modèle</label>
+          </div>
+          <div class="input-group">
+            <input required="" type="text" name="text" autocomplete="off" class="input">
+            <label class="user-label">Adresse Mac</label>
+          </div>
+          <div class="input-group">
+            <input required="" type="text" name="text" autocomplete="off" class="input">
+            <label class="user-label">Adresse IP</label>
+          </div>
 
-        <select required="" name="location" class="input">
-            <option value="">Sélectionner une localisation </option>
-            {% for location in locations %}
-                <option value="{{ location.rooms }}">{{ location.rooms }}</option>
-            {% endfor %}
-        </select>
-
-            <!-- Ajoutez vos champs de formulaire ici -->
+          <select required="" name="location" class="input">
+              <option value="">Sélectionner une localisation </option>
+              {% for location in locations %}
+                  <option value="{{ location.rooms }}">{{ location.rooms }}</option>
+              {% endfor %}
+          </select>
+          <div class="input-group">
+            <input required="" type="text" name="text" autocomplete="off" class="input">
+            <label class="user-label">Utilisateur</label>
+          </div>
         </form>
     </div>
 </div>  
