@@ -22,7 +22,7 @@ class Location(db.Model):
     rooms = db.Column(db.Text)
 
 class Materiel(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     designation = db.Column(db.String(100))
     marque = db.Column(db.String(100))
     modele = db.Column(db.String(50))

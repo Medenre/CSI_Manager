@@ -100,11 +100,11 @@ def init_app(app):  #POUR INIT APP.PY
             current_date = datetime.utcnow()
             formatted_date = current_date.strftime("%d-%m-%Y")
 
-            materiel = Materiel(designation=designation, marque=marque, modele=modele, mac=mac, ip=ip, username=username, location=location_name,last_modif=formatted_date)
+            materiel = Materiel(designation=designation, marque=marque, modele=modele, mac=mac, ip=ip, username=username, network=network ,location=location_name,last_modif=formatted_date)
             
             db.session.add(materiel)
             db.session.commit()
-            return redirect(url_for('materiel'))
+        return redirect(url_for('materiel'))
 
         #return render_template('create_ticket.html')
 
