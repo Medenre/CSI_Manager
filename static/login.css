@@ -74,19 +74,17 @@
   margin-top: 5px; /* Marge en haut pour l'espace */
 }
 
+
+
 /* SELECT BOX */
-
-
 .custom-select {
   position: relative;
   width: 100%;
-
 }
 
 .custom-select select option[value=""] {
   color: gray;
 }
-
 
 .custom-select select {
   appearance: none;

@@ -110,7 +110,7 @@
     </section>
     <section class="table__body">
 
-      <button id="addMaterialButton" type="button" class="button">
+      <button id="addMaterialButton" name="addMaterialButton" type="button" class="button">
         <div class="button-top">Ajouter du matériel</div>
         <div class="button-bottom"></div>
         <div class="button-base"></div>
@@ -161,37 +161,54 @@
         <!-- Formulaire pour ajouter du matériel -->
         <form id="addMaterialForm" class="form-grid">
         
-          <div class="input-group">
-            <input required="" type="text" name="text" autocomplete="off" class="input">
-            <label class="user-label">Désignation</label>
-          </div>
-          <div class="input-group">
-            <input required="" type="text" name="text" autocomplete="off" class="input">
-            <label class="user-label">Marque</label>
-          </div>
-          <div class="input-group">
-            <input required="" type="text" name="text" autocomplete="off" class="input">
-            <label class="user-label">Modèle</label>
-          </div>
-          <div class="input-group">
-            <input required="" type="text" name="text" autocomplete="off" class="input">
-            <label class="user-label">Adresse Mac</label>
-          </div>
-          <div class="input-group">
-            <input required="" type="text" name="text" autocomplete="off" class="input">
-            <label class="user-label">Adresse IP</label>
+            <div class="input-group">
+              <input required="" type="text" name="text" autocomplete="off" class="input">
+              <label class="user-label">Désignation</label>
+            </div>
+            <div class="input-group">
+              <input required="" type="text" name="text" autocomplete="off" class="input">
+              <label class="user-label">Marque</label>
+            </div>
+            <div class="input-group">
+              <input required="" type="text" name="text" autocomplete="off" class="input">
+              <label class="user-label">Modèle</label>
+            </div>
+            <div class="input-group">
+              <input required="" type="text" name="text" autocomplete="off" class="input">
+              <label class="user-label">Adresse Mac</label>
+            </div>
+            <div class="input-group">
+              <input required="" type="text" name="text" autocomplete="off" class="input">
+              <label class="user-label">Adresse IP</label>
+            </div>
+            <div class="input-group">
+              <input required="" type="text" name="text" autocomplete="off" class="input">
+              <label class="user-label">Utilisateur</label>
+            </div>
+
+            <div class="form-container">
+            
+              <select required="" name="location" class="select_loc">
+                <option value="">Localisation </option>
+                {% for location in locations %}
+                    <option value="{{ location.rooms }}">{{ location.rooms }}</option>
+                {% endfor %}
+            </select>
+
+              <select required="" name="network" class="select_loc">
+                <option value="">Réseau </option>
+                <option value="1">RIP</option>
+                <option value="2">DR</option>
+              </select>
+
           </div>
 
-          <select required="" name="location" class="input">
-              <option value="">Sélectionner une localisation </option>
-              {% for location in locations %}
-                  <option value="{{ location.rooms }}">{{ location.rooms }}</option>
-              {% endfor %}
-          </select>
-          <div class="input-group">
-            <input required="" type="text" name="text" autocomplete="off" class="input">
-            <label class="user-label">Utilisateur</label>
-          </div>
+            <button id="addMaterial" name="addMaterial" type="button" class="button">
+              <div class="button-top">Ajouter</div>
+              <div class="button-bottom"></div>
+              <div class="button-base"></div>
+            </button>
+
         </form>
     </div>
 </div>  
