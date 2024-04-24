@@ -126,10 +126,12 @@
           <thead>
               <tr>
                   <th> Id <span class="icon-arrow">&UpArrow;</span></th>
+                  <th> Désignation <span class="icon-arrow">&UpArrow;</span></th>
                   <th> Marque <span class="icon-arrow">&UpArrow;</span></th>
                   <th> Modèle <span class="icon-arrow">&UpArrow;</span></th>
                   <th> @mac <span class="icon-arrow">&UpArrow;</span></th>
                   <th> @IP  <span class="icon-arrow">&UpArrow;</span></th>
+                  <th> Réseau  <span class="icon-arrow">&UpArrow;</span></th>
                   <th> Localisation <span class="icon-arrow">&UpArrow;</span></th>
                   <th> Utilisateurs  <span class="icon-arrow">&UpArrow;</span></th>
                   <th> Date modif  <span class="icon-arrow">&UpArrow;</span></th>
@@ -139,9 +141,12 @@
               {% for materiel in materiels %}
               <tr>
                   <td>{{materiel.id}}</td>
+                  <td>{{materiel.designation}}</td>
                   <td>{{materiel.marque}}</td>
+                  <td>{{materiel.modele}}</td>
                   <td>{{materiel.mac}}</td>
                   <td>{{materiel.ip}}</td>
+                  <td>{{materiel.network}}</td>
                   <td>{{materiel.location}}</td>
                   <td>{{materiel.username}}</td>
                   <td>{{materiel.last_modif}}</td>
@@ -159,30 +164,31 @@
         <span class="close">&times;</span>
         <h2>Ajouter du matériel</h2>
         <!-- Formulaire pour ajouter du matériel -->
-        <form id="addMaterialForm" class="form-grid">
+       
+        <form action="{{url_for('create_material')}}" method="post" id="addMaterialForm" class="form-grid">
         
             <div class="input-group">
-              <input required="" type="text" name="text" autocomplete="off" class="input">
+              <input required="" type="text" name="designation" autocomplete="off" class="input">
               <label class="user-label">Désignation</label>
             </div>
             <div class="input-group">
-              <input required="" type="text" name="text" autocomplete="off" class="input">
+              <input required="" type="text" name="marque" autocomplete="off" class="input">
               <label class="user-label">Marque</label>
             </div>
             <div class="input-group">
-              <input required="" type="text" name="text" autocomplete="off" class="input">
+              <input required="" type="text" name="modele" autocomplete="off" class="input">
               <label class="user-label">Modèle</label>
             </div>
             <div class="input-group">
-              <input required="" type="text" name="text" autocomplete="off" class="input">
+              <input required="" type="text" name="mac" autocomplete="off" class="input">
               <label class="user-label">Adresse Mac</label>
             </div>
             <div class="input-group">
-              <input required="" type="text" name="text" autocomplete="off" class="input">
+              <input required="" type="text" name="ip" autocomplete="off" class="input">
               <label class="user-label">Adresse IP</label>
             </div>
             <div class="input-group">
-              <input required="" type="text" name="text" autocomplete="off" class="input">
+              <input required="" type="text" name="username" autocomplete="off" class="input">
               <label class="user-label">Utilisateur</label>
             </div>
 
@@ -203,7 +209,7 @@
 
           </div>
 
-            <button id="addMaterial" name="addMaterial" type="button" class="button">
+            <button id="addMaterial" name="addMaterial" type="submit" class="button">
               <div class="button-top">Ajouter</div>
               <div class="button-bottom"></div>
               <div class="button-base"></div>

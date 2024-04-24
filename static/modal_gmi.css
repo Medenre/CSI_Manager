@@ -27,7 +27,6 @@ h2 {
 }
 
 
-
 /* Style de fermeture du modal */
 .close {
     color: #aaa;
@@ -48,6 +47,7 @@ h2 {
     flex-wrap: wrap;
     /* justify-content: space-between; Pour espacer les éléments */
 }
+
 
 
 
@@ -90,19 +90,24 @@ h2 {
     color: rgba(57, 177, 131);
    }
 
+
+
    /* SELECT BOX LOCALISATION */
    .select_loc {
     border: solid 1.5px #9e9e9e;
     border-radius: 0.5rem;
-    padding-right: 4rem;
+    width: 14.2rem;
     background: none;
-    padding: 0.75rem;
-    margin-top: 1rem;
-    margin-right: 1rem;
+    padding: 0.95rem;
+    margin-right: 1rem; /* Ajout de marge à droite */
     font-size: 1rem;
     color: #f5f5f5;
     transition: border 150ms cubic-bezier(0.4,0,0.2,1);
-   }
+}
+   
+   /* .select_loc .select_rsx {
+    padding: 5rem 5rem;
+   } */
 
    .select_loc option {
     background: rgba(57, 177, 131);
@@ -118,14 +123,13 @@ h2 {
 .form-container {
     display: flex;
     align-items: flex-start; /* Alignement des éléments sur le bord supérieur */
-    
+    margin-top: 1rem;
 }
 
 #addMaterial {
-    padding: 5rem 5rem;
-    
+  margin-left: 2.5rem;
+  padding: 1.5rem 2rem;
 }
-
 /* BOUTON AJOUTER DU MATERIEL */
 
 .button {
