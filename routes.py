@@ -120,7 +120,7 @@ def init_app(app):  #POUR INIT APP.PY
             return redirect(url_for('index'))
         return render_template('respond_ticket.html', ticket=ticket)
 
-    #PAGE TICKET
+    #PAGE GMI
     @app.route('/materiel')
     def materiel():
         if 'user_id' not in session:
@@ -128,10 +128,10 @@ def init_app(app):  #POUR INIT APP.PY
            return redirect(url_for('index'))
         current_user = session.get('username')
 
-        materiel = Materiel.query.all()
+        materiels = Materiel.query.all()
         locations = Location.query.all()
 
-        return render_template('materiel.html', current_user=current_user, materiel=materiel, locations=locations)
+        return render_template('materiel.html', current_user=current_user, materiels=materiels, locations=locations)
 
     @app.route('/diagramme')
     def diagramme():
