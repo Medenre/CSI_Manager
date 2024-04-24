@@ -80,6 +80,33 @@ def init_app(app):  #POUR INIT APP.PY
             db.session.commit()
             return redirect(url_for('index'))
         #return render_template('create_ticket.html')
+    
+    @app.route('/create_material', methods=['GET', 'POST'])
+    def create_material():
+       # if 'user_id' not in session:
+        #    flash('Veuillez vous connecter pour accéder à cette fonctionnalité.', 'warning')
+         #   return redirect(url_for('login'))
+        if request.method == 'POST':
+
+            designation = request.form['designation']
+            marque = request.form['marque']
+            modele = request.form['modele']
+            mac = request.form['mac']
+            ip = request.form['ip']
+            username = request.form['username']
+            location_name = request.form['location']
+            network = request.form['network']
+            
+            current_date = datetime.utcnow()
+            formatted_date = current_date.strftime("%d-%m-%Y")
+
+            materiel = Materiel(designation=designation, marque=marque, modele=modele, mac=mac, ip=ip, username=username, location=location_name,last_modif=formatted_date)
+            
+            db.session.add(materiel)
+            db.session.commit()
+            return redirect(url_for('materiel'))
+
+        #return render_template('create_ticket.html')
 
     @app.route('/respond_ticket/<int:ticket_id>', methods=['GET', 'POST'])
     def respond_ticket(ticket_id):

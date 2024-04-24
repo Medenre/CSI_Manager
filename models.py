@@ -23,11 +23,14 @@ class Location(db.Model):
 
 class Materiel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    designation = db.Column(db.String(100))
     marque = db.Column(db.String(100))
     modele = db.Column(db.String(50))
     mac = db.Column(db.Text)
+    ip = db.Column(db.Text)
     location = db.Column(db.Text)
     username = db.Column(db.Text)
+    network = db.Column(db.Text)
     last_modif = db.Column(db.String(20))
 
 class User(db.Model):
