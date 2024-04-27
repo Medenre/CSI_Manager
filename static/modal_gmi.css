@@ -56,7 +56,6 @@ h2 {
     position: relative;
     padding-top: 1rem;
     padding-right: 1rem;
-    /* flex-basis: calc(33.33% - 10px); 33.33% pour trois éléments par ligne, moins la marge */
    }
    
    .input {
@@ -90,7 +89,7 @@ h2 {
     color: rgba(57, 177, 131);
    }
 
-
+  
 
    /* SELECT BOX LOCALISATION */
    .select_loc {

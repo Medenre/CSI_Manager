@@ -10,7 +10,7 @@ const resolvedTickets = document.getElementById('resolved_tickets').innerText;
       labels: ['Ouverts', 'Fermés', 'En cours', 'Clôturés'],
       datasets: [{
           data: [openTickets, closedTickets, inProgressTickets, resolvedTickets],
-          backgroundColor: ['#FFCE56', '#FF6384', '#36A2EB', '#4BC0C0']
+          backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56', '#4BC0C0']
       }]
   };
 
