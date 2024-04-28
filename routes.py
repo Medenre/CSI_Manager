@@ -1,6 +1,7 @@
 from flask import render_template, request, abort, redirect, url_for, session, flash
 from models import db, User,Ticket,Location,Materiel
 from datetime import datetime
+from forms import MaterielForm
 
 def init_app(app):  #POUR INIT APP.PY
 
@@ -81,22 +82,44 @@ def init_app(app):  #POUR INIT APP.PY
             return redirect(url_for('index'))
         #return render_template('create_ticket.html')
     
+    # @app.route('/create_material', methods=['GET', 'POST'])
+    # def create_material():
+    #    # if 'user_id' not in session:
+    #     #    flash('Veuillez vous connecter pour accéder à cette fonctionnalité.', 'warning')
+    #      #   return redirect(url_for('login'))
+    #     if request.method == 'POST':
+
+    #         designation = request.form['designation']
+    #         marque = request.form['marque']
+    #         modele = request.form['modele']
+    #         mac = request.form['mac']
+    #         ip = request.form['ip']
+    #         username = request.form['username']
+    #         location_name = request.form['location']
+    #         network = request.form['network']
+            
+    #         current_date = datetime.utcnow()
+    #         formatted_date = current_date.strftime("%d-%m-%Y")
+
+    #         materiel = Materiel(designation=designation, marque=marque, modele=modele, mac=mac, ip=ip, username=username, network=network ,location=location_name,last_modif=formatted_date)
+            
+    #         db.session.add(materiel)
+    #         db.session.commit()
+    #     return redirect(url_for('materiel'))
     @app.route('/create_material', methods=['GET', 'POST'])
     def create_material():
-       # if 'user_id' not in session:
-        #    flash('Veuillez vous connecter pour accéder à cette fonctionnalité.', 'warning')
-         #   return redirect(url_for('login'))
-        if request.method == 'POST':
+        form = MaterielForm()
+        if form.validate_on_submit():
+            # Récupérez les données du formulaire
+            designation = form.designation.data
+            marque = form.marque.data
+            modele = form.modele.data
+            mac = form.mac.data
+            ip = form.ip.data
+            username = form.username.data
+            location_name = form.location.data
+            network = form.network.data
 
-            designation = request.form['designation']
-            marque = request.form['marque']
-            modele = request.form['modele']
-            mac = request.form['mac']
-            ip = request.form['ip']
-            username = request.form['username']
-            location_name = request.form['location']
-            network = request.form['network']
-            
             current_date = datetime.utcnow()
             formatted_date = current_date.strftime("%d-%m-%Y")
 
@@ -104,9 +127,11 @@ def init_app(app):  #POUR INIT APP.PY
             
             db.session.add(materiel)
             db.session.commit()
-        return redirect(url_for('materiel'))
+            return redirect(url_for('materiel'))
 
-        #return render_template('create_ticket.html')
+        # Si la méthode est GET ou si le formulaire n'est pas valide, affichez le formulaire
+        return render_template('create_material.html', form=form)
+        
 
     @app.route('/respond_ticket/<int:ticket_id>', methods=['GET', 'POST'])
     def respond_ticket(ticket_id):
@@ -127,11 +152,11 @@ def init_app(app):  #POUR INIT APP.PY
            flash('Veuillez vous connecter pour accéder à cette fonctionnalité.', 'warning')
            return redirect(url_for('index'))
         current_user = session.get('username')
-
+        form = MaterielForm()
         materiels = Materiel.query.all()
         locations = Location.query.all()
 
-        return render_template('materiel.html', current_user=current_user, materiels=materiels, locations=locations)
+        return render_template('materiel.html', form=form ,current_user=current_user, materiels=materiels, locations=locations)
 
     @app.route('/diagramme')
     def diagramme():
