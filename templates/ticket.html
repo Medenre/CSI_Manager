@@ -18,8 +18,8 @@
             <input type="text" class="form-control" >
             <!-- <button class="btn btn-success" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button> -->
           </div>
-
-        <table style="width: 97%;" class=" table_ticket table table-striped table-hover table align-middle rounded-3 overflow-hidden border border-white  mx-auto">
+        <div class="tablerounededCorner mx-auto">
+        <table class="table table-striped table-hover table align-middle roundedTable mx-auto">
             <thead class="table-light">
                 <tr>
                     <th class="sortable" data-column="id"> Id <span class="icon-arrow">&uarr;</span></th>
@@ -56,6 +56,7 @@
                 {% endfor %}
             </tbody>
         </table>
+    </div>
         <script>document.addEventListener('DOMContentLoaded', function() {
             const searchBar = document.querySelector('.form-control');
         

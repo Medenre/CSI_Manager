@@ -1,4 +1,32 @@
 
+.tablerounededCorner {
+    border: 2px solid white;
+    border-radius: 1.2em;
+    width: 95%;
+    padding: 0;
+}
+
+.roundedTable {
+    border-collapse: collapse;
+    border-radius: 1rem;
+    overflow: hidden;
+    width: 100%;
+    margin: 0;
+}
+
+.roundedTable th,
+.roundedTable td {
+    padding: .6em;
+    border-bottom: 1px solid white;
+}
+
+.roundedTable th {
+    text-align: left;
+}
+
+.roundedTable tr:last-child td {
+    border-bottom: none;
+}
 
 .status {
     margin-top: 15px;
