@@ -1,3 +1,5 @@
+
+
 .status {
     margin-top: 15px;
     padding: .4rem 0;
@@ -25,3 +27,6 @@
     color: #000000;
 }
 
+.search {
+    padding: 0.7rem;
+}
