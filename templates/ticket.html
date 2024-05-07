@@ -57,64 +57,7 @@
             </tbody>
         </table>
     </div>
-        <script>document.addEventListener('DOMContentLoaded', function() {
-            const searchBar = document.querySelector('.form-control');
-        
-            searchBar.addEventListener('input', function(event) {
-                const searchText = event.target.value.toLowerCase();
-                filterTickets(searchText);
-            });
-        });
-                function filterTickets(searchText) {
-                const rows = document.querySelectorAll('tbody tr');
-    
-                rows.forEach(function(row) {
-                    const ticketData = row.textContent.toLowerCase();
-                    if (ticketData.includes(searchText)) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
-            }
-
-
-
-            // TRIE DES COLONNES
-            function sortTable(columnId, order) {
-    const tbody = document.querySelector('tbody');
-    const rows = Array.from(tbody.querySelectorAll('tr'));
-
-    rows.sort(function(rowA, rowB) {
-        const cellA = rowA.querySelector(`td:nth-child(${columnIndex(columnId)})`).textContent.trim();
-        const cellB = rowB.querySelector(`td:nth-child(${columnIndex(columnId)})`).textContent.trim();
-
-        if (order === 'asc') {
-            return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
-        } else {
-            return cellB.localeCompare(cellA, undefined, { numeric: true, sensitivity: 'base' });
-        }
-    });
-
-    // Réinsérer les lignes triées dans le tbody
-    tbody.innerHTML = '';
-    rows.forEach(function(row) {
-        tbody.appendChild(row);
-    });
-}
-
-function columnIndex(columnId) {
-    const headers = document.querySelectorAll('thead th');
-    for (let i = 0; i < headers.length; i++) {
-        if (headers[i].dataset.column === columnId) {
-            return i + 1; // Retourne l'index 1-based
-        }
-    }
-    return -1;
-}
-
-
-    </script>
+    <script  src="{{ url_for('static', filename='ticket.js')}}"></script>
     </body>
     
 </html>
