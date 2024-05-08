@@ -7,7 +7,7 @@ class MaterielForm(FlaskForm):
     marque = StringField('Marque', validators=[DataRequired()])
     modele = StringField('Modèle', validators=[DataRequired()])
     mac = StringField('Adresse MAC', validators=[DataRequired()])
-    ip = StringField('Adresse IP', validators=[DataRequired()])
+    ip = StringField('Adresse IP')
     username = StringField('Utilisateur', validators=[DataRequired()])
     location = StringField('Localisation', validators=[DataRequired()])
     network = StringField('Réseau', validators=[DataRequired()])
