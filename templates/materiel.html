@@ -8,6 +8,7 @@
     <title>CSI Manager</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='ticket.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='materiel.css')}}">
 </head>
     {% include 'sidebar.html' %}
 
@@ -20,7 +21,7 @@
           </div>
 
           <div class=" tool d-grid gap-2 d-md-flex justify-content">
-            <button class="btn btn-success" type="button">Ajouter <i class="fa-solid fa-plus"></i> </button>
+            <button id="addMaterialButton" class="btn btn-success" type="button">Ajouter <i class="fa-solid fa-plus"></i> </button>
             <button class="btn btn-primary" type="button">Modifier <i class="fa-solid fa-pen-to-square"></i> </button>
             <button class="btn btn-danger" type="button">Supprimer <i class="fa-solid fa-trash"></i> </button>
           </div>
@@ -60,7 +61,112 @@
             </tbody>
         </table>
     </div>
+
+
+    <div id="addMaterialModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Modal title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!--    
+  <div id="addMaterialModal" class="modal">
+    
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Ajouter du matériel</h2>
+       
+       
+        <form method="POST" action="{{ url_for('create_material') }}" >
+          {{ form.hidden_tag() }}
+
+          <div class="form-group">
+              {{ form.designation.label(class="form-label") }}
+              {{ form.designation(class="form-control") }}
+          </div>
+      
+          <div class="form-group">
+              {{ form.marque.label(class="form-label") }}
+              {{ form.marque(class="form-control") }}
+          </div>
+      
+          <div class="form-group">
+              {{ form.modele.label(class="form-label") }}
+              {{ form.modele(class="form-control") }}
+          </div>
+      
+          <div class="form-group">
+              {{ form.mac.label(class="form-label") }}
+              {{ form.mac(class="form-control") }}
+          </div>
+      
+          <div class="form-group">
+              {{ form.ip.label(class="form-label") }}
+              {{ form.ip(class="form-control") }}
+          </div>
+      
+          <div class="form-group">
+              {{ form.network.label(class="form-label") }}
+              {{ form.network(class="form-control") }}
+          </div>
+      
+          <div class="form-group">
+              {{ form.location.label(class="form-label") }}
+              {{ form.location(class="form-control") }}
+          </div>
+      
+          <div class="form-group">
+              {{ form.username.label(class="form-label") }}
+              {{ form.username(class="form-control") }}
+          </div>
+          <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-success btn-lg mt-3 ">Soumettre</button>
+        </div>
+        </form>
+    
+    </div>
+</div>   -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
     <script  src="{{ url_for('static', filename='ticket.js')}}"></script>
+    <script>
+        // Récupérer le modal
+        var modal = document.getElementById('addMaterialModal');
+      
+        // Récupérer le bouton qui ouvre le modal
+        var btn = document.getElementById("addMaterialButton");
+      
+        // Récupérer l'élément span qui ferme le modal
+        var span = document.getElementsByClassName("btn-close")[0];
+      
+        // Quand l'utilisateur clique sur le bouton, ouvrir le modal
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+      
+        // Quand l'utilisateur clique sur <span> (x), fermer le modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+      
+        // Quand l'utilisateur clique n'importe où en dehors du modal, fermer le modal
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+      </script>
     </body>
     
 </html>
