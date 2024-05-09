@@ -130,8 +130,42 @@ def init_app(app):  #POUR INIT APP.PY
             return redirect(url_for('materiel'))
 
         # Si la méthode est GET ou si le formulaire n'est pas valide, affichez le formulaire
-        return render_template('create_material.html', form=form)
-        
+        return render_template('materiel.html', form=form)
+    
+    @app.route('/update_material', methods=['POST'])
+    def update_material():
+            # Récupérer les données du formulaire
+            designation = request.form['materialName']
+            marque = request.form['materialMarque']
+            modele = request.form['materialModele']
+            mac = request.form['materialMac']
+            ip = request.form['materialIp']
+            username = request.form['materialUsername']
+            location= request.form['materialLocation']
+            network = request.form['materialNetwork']
+            # Récupérez d'autres champs du formulaire
+
+            # Effectuer la mise à jour dans la base de données
+            materiel_id = request.form['materialId']  # Assurez-vous d'inclure l'ID du matériel à mettre à jour
+            materiel = Materiel.query.get(materiel_id)
+
+            if materiel:
+                materiel.designation = designation
+                materiel.marque = marque
+                materiel.modele = modele
+                materiel.mac = mac
+                materiel.ip = ip
+                materiel.username = username
+                materiel.location = location
+                materiel.network = network
+                # Mettre à jour d'autres attributs du matériel
+
+                db.session.commit()
+                flash('Le matériel a été mis à jour avec succès.', 'success')
+            else:
+                flash('Matériel non trouvé.', 'error')
+
+            return redirect(url_for('materiel'))
 
     @app.route('/respond_ticket/<int:ticket_id>', methods=['GET', 'POST'])
     def respond_ticket(ticket_id):

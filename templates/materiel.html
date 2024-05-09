@@ -22,7 +22,7 @@
 
           <div class=" tool d-grid gap-2 d-md-flex justify-content">
             <button id="addMaterialButton" class="btn btn-success" type="button">Ajouter <i class="fa-solid fa-plus"></i> </button>
-            <button class="btn btn-primary" type="button">Modifier <i class="fa-solid fa-pen-to-square"></i> </button>
+            <button id="modifMaterialButton" class="btn btn-primary" type="button">Modifier <i class="fa-solid fa-pen-to-square"></i> </button>
             <button class="btn btn-danger" type="button">Supprimer <i class="fa-solid fa-trash"></i> </button>
           </div>
           
@@ -31,6 +31,7 @@
         <table class="table table-striped table-hover table align-middle roundedTable mx-auto">
             <thead class="table-light">
                 <tr>
+                    <th></th>
                     <th class="sortable" data-column="id"> Id <span class="icon-arrow">&uarr;</span></th>
                     <th class="sortable" data-column="username"> Désignation <span class="icon-arrow">&uarr;</span></th>
                     <th class="sortable" data-column="location"> Marque <span class="icon-arrow">&uarr;</span></th>
@@ -46,6 +47,7 @@
             <tbody class="table-group-divider">
                 {% for materiel in materiels %}
               <tr>
+                  <td> <input class="form-check-input" type="radio" name="selectedRow"></td>
                   <td class="fw-bold">{{materiel.id}}</td>
                   <td>{{materiel.designation}}</td>
                   <td>{{materiel.marque}}</td>
@@ -121,14 +123,127 @@
                             <button type="submit" class="btn btn-success btn-lg ">Soumettre</button>
                           </div>
                     </div>
-                    
+
                   </form>
             </div>
-            
           </div>
         </div>
-      </div>
+    </div>
 
+    <div id="modifMaterialModal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-fullscreen-sm-down">
+          <div class="modal-content">
+
+            <div class="modal-header">
+                <div class="grid ">
+              <h5 class="modal-title p-2 g-col-6">Modifier le matériel</h5>
+              <label class="ps-2 g-col-6 fs-5">ID: <span id="materialId2"></span></label>
+            </div>
+              <button id="btn_close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+               
+                <form method="POST" action="{{ url_for('update_material') }}" >
+                    <input type="hidden" id="materialId" name="materialId"> 
+                <div class="form-group mb-3">
+                    <label class="form-label" for="materialName">Désignation:</label>
+                    <input class="form-control" type="text" id="materialName" name="materialName"> 
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label">Marque:</label>
+                    <input class="form-control" type="text" id="materialMarque" name="materialMarque">
+                </div>
+
+                <div class="form-group mb-3"> 
+                    <label class="form-label">Modèle:</label>
+                    <input class="form-control" type="text" id="materialModele" name="materialModele">
+                </div>
+
+                <div class="form-group mb-3"> 
+                    <label class="form-label">@ Mac:</label>
+                    <input class="form-control" type="text" id="materialMac" name="materialMac">
+                </div>
+
+                <div class="form-group mb-3"> 
+                    <label class="form-label">@ IP:</label>
+                    <input class="form-control" type="text" id="materialIp" name="materialIp">
+                </div>
+
+                <div class="form-group mb-3"> 
+                    <label class="form-label">Réseaux:</label>
+                    <input class="form-control" type="text" id="materialNetwork" name="materialNetwork">
+                </div>
+
+                <div class="form-group mb-3"> 
+                    <label class="form-label">Localisation:</label>
+                    <input class="form-control" type="text" id="materialLocation" name="materialLocation">
+                </div>
+
+                <div class="form-group mb-3"> 
+                    <label class="form-label">Utilisateur:</label>
+                    <input class="form-control" type="text" id="materialUsername" name="materialUsername">
+                </div>
+
+
+                    <div class="modal-footer mt-3">
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg ">Soumettre</button>
+                          </div>
+                    </div>
+
+                  </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const modifMaterialButton = document.getElementById('modifMaterialButton');
+    
+        // Ajoutez un gestionnaire d'événements clic au bouton de modification
+        modifMaterialButton.addEventListener('click', function() {
+            // Récupérez la ligne sélectionnée (avec le radio check)
+            const selectedRow = document.querySelector('input[name="selectedRow"]:checked');
+    
+            if (selectedRow) {
+                // Récupérez les données de la ligne sélectionnée
+                const row = selectedRow.closest('tr');
+                const id = row.cells[1].textContent;
+                const designation = row.cells[2].textContent;
+                const marque = row.cells[3].textContent;
+                const modele = row.cells[4].textContent;
+                const mac = row.cells[5].textContent;
+                const ip = row.cells[6].textContent;
+                const network = row.cells[7].textContent;
+                const location = row.cells[8].textContent;
+                const username = row.cells[9].textContent;
+    
+                // Remplissez les champs du formulaire dans le modal avec ces données
+                document.getElementById('materialId2').textContent = id;
+                document.getElementById('materialId').value = id;
+                document.getElementById('materialName').value = designation;
+                document.getElementById('materialMarque').value = marque;
+                document.getElementById('materialModele').value = modele;
+                document.getElementById('materialMac').value = mac;
+                document.getElementById('materialIp').value = ip;
+                document.getElementById('materialNetwork').value = network;
+                document.getElementById('materialLocation').value = location;
+                document.getElementById('materialUsername').value = username;
+    
+                // Ouvrez le modal
+                const myModal = new bootstrap.Modal(document.getElementById('modifMaterialModal'));
+                myModal.show();
+            } else {
+                // Aucune ligne sélectionnée, affichez un message d'erreur ou faites autre chose
+                console.log('Aucune ligne sélectionnée.');
+            }
+        });
+    });
+    
+        </script>
     <script  src="{{ url_for('static', filename='ticket.js')}}"></script>
     <script  src="{{ url_for('static', filename='modal.js')}}"></script>
     </body>
