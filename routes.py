@@ -53,6 +53,20 @@ def init_app(app):  #POUR INIT APP.PY
                 error = "Identifiant ou mot de passe incorrect."
         return render_template('login.html', error=error)
     
+    @app.route('/materiel')
+    def materiel():
+        if 'user_id' not in session:
+           flash('Veuillez vous connecter pour accéder à cette fonctionnalité.', 'warning')
+           return redirect(url_for('index'))
+        current_user = session.get('username')
+        form = MaterielForm()
+        materiels = Materiel.query.all()
+        locations = Location.query.all()
+
+        
+
+        return render_template('materiel.html', form=form ,current_user=current_user, materiels=materiels, locations=locations)
+
 
     @app.route('/admin/dashboard')  
     def admin_dashboard():
@@ -80,32 +94,7 @@ def init_app(app):  #POUR INIT APP.PY
             db.session.add(ticket)
             db.session.commit()
             return redirect(url_for('index'))
-        #return render_template('create_ticket.html')
-    
-    # @app.route('/create_material', methods=['GET', 'POST'])
-    # def create_material():
-    #    # if 'user_id' not in session:
-    #     #    flash('Veuillez vous connecter pour accéder à cette fonctionnalité.', 'warning')
-    #      #   return redirect(url_for('login'))
-    #     if request.method == 'POST':
 
-    #         designation = request.form['designation']
-    #         marque = request.form['marque']
-    #         modele = request.form['modele']
-    #         mac = request.form['mac']
-    #         ip = request.form['ip']
-    #         username = request.form['username']
-    #         location_name = request.form['location']
-    #         network = request.form['network']
-            
-    #         current_date = datetime.utcnow()
-    #         formatted_date = current_date.strftime("%d-%m-%Y")
-
-    #         materiel = Materiel(designation=designation, marque=marque, modele=modele, mac=mac, ip=ip, username=username, network=network ,location=location_name,last_modif=formatted_date)
-            
-    #         db.session.add(materiel)
-    #         db.session.commit()
-    #     return redirect(url_for('materiel'))
     @app.route('/create_material', methods=['GET', 'POST'])
     def create_material():
         form = MaterielForm()
@@ -134,6 +123,7 @@ def init_app(app):  #POUR INIT APP.PY
     
     @app.route('/update_material', methods=['POST'])
     def update_material():
+        try:
             # Récupérer les données du formulaire
             designation = request.form['materialName']
             marque = request.form['materialMarque']
@@ -141,32 +131,49 @@ def init_app(app):  #POUR INIT APP.PY
             mac = request.form['materialMac']
             ip = request.form['materialIp']
             username = request.form['materialUsername']
-            location= request.form['materialLocation']
+            location = request.form['materialLocation']
             network = request.form['materialNetwork']
-            # Récupérez d'autres champs du formulaire
-
-            # Effectuer la mise à jour dans la base de données
             materiel_id = request.form['materialId']  # Assurez-vous d'inclure l'ID du matériel à mettre à jour
-            materiel = Materiel.query.get(materiel_id)
 
-            if materiel:
-                materiel.designation = designation
-                materiel.marque = marque
-                materiel.modele = modele
-                materiel.mac = mac
-                materiel.ip = ip
-                materiel.username = username
-                materiel.location = location
-                materiel.network = network
-                # Mettre à jour d'autres attributs du matériel
+            # Entrer dans le contexte de l'application Flask
+            with app.app_context():
+                # Récupérez le matériel depuis la base de données
+                materiel = Materiel.query.get(materiel_id)
 
-                db.session.commit()
-                flash('Le matériel a été mis à jour avec succès.', 'success')
-            else:
-                flash('Matériel non trouvé.', 'error')
+                if materiel:
+                    # Mettez à jour les attributs du matériel
+                    materiel.designation = designation
+                    materiel.marque = marque
+                    materiel.modele = modele
+                    materiel.mac = mac
+                    materiel.ip = ip
+                    materiel.username = username
+                    materiel.location = location
+                    materiel.network = network
 
-            return redirect(url_for('materiel'))
+                    # Mettez à jour la date de modification
+                    materiel.last_modif = datetime.utcnow().strftime("%d-%m-%Y")
 
+                    # Effectuez la mise à jour dans la base de données
+                    db.session.commit()
+
+                    flash('Le matériel a été mis à jour avec succès.', 'success')
+                else:
+                    # Le matériel n'a pas été trouvé
+                    flash('Matériel non trouvé.', 'error')
+
+        except Exception as e:
+            # Gérez les exceptions
+            flash(f'Erreur lors de la mise à jour du matériel: {str(e)}', 'error')
+        
+        return redirect(url_for('materiel'))
+    
+    @app.route('/clear_update_success', methods=['GET'])
+    def clear_update_success():
+        session.pop('update_success', None)
+    return 'Success'
+    
+    
     @app.route('/respond_ticket/<int:ticket_id>', methods=['GET', 'POST'])
     def respond_ticket(ticket_id):
         ticket = Ticket.query.get_or_404(ticket_id)
@@ -179,19 +186,7 @@ def init_app(app):  #POUR INIT APP.PY
             return redirect(url_for('index'))
         return render_template('respond_ticket.html', ticket=ticket)
 
-    #PAGE GMI
-    @app.route('/materiel')
-    def materiel():
-        if 'user_id' not in session:
-           flash('Veuillez vous connecter pour accéder à cette fonctionnalité.', 'warning')
-           return redirect(url_for('index'))
-        current_user = session.get('username')
-        form = MaterielForm()
-        materiels = Materiel.query.all()
-        locations = Location.query.all()
-
-        return render_template('materiel.html', form=form ,current_user=current_user, materiels=materiels, locations=locations)
-
+   
     @app.route('/diagramme')
     def diagramme():
         # Transmettre les données au modèle HTML
