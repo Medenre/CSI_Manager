@@ -63,9 +63,8 @@ def init_app(app):  #POUR INIT APP.PY
         materiels = Materiel.query.all()
         locations = Location.query.all()
 
-        
-
-        return render_template('materiel.html', form=form ,current_user=current_user, materiels=materiels, locations=locations)
+        update_success = session.pop('update_success', False)
+        return render_template('materiel.html', form=form ,current_user=current_user, materiels=materiels, locations=locations, update_success=update_success)
 
 
     @app.route('/admin/dashboard')  
@@ -156,7 +155,7 @@ def init_app(app):  #POUR INIT APP.PY
 
                     # Effectuez la mise à jour dans la base de données
                     db.session.commit()
-
+                    session['update_success'] = True
                     flash('Le matériel a été mis à jour avec succès.', 'success')
                 else:
                     # Le matériel n'a pas été trouvé
