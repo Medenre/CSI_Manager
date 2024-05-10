@@ -71,10 +71,3 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// Affichage notif
-        const toastLiveExample = document.getElementById('liveToast')
-        const updateSuccess = JSON.parse('{{ update_success|tojson|safe }}');
-        if (updateSuccess) {
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-        toastBootstrap.show()
-    }

@@ -217,7 +217,14 @@
           </div>
         </div>
     </div>
-
+<script>  
+    const toastLiveExample = document.getElementById('liveToast')
+    const updateSuccess = JSON.parse('{{ update_success|tojson|safe }}');
+    if (updateSuccess) {
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+    toastBootstrap.show()
+}
+</script>
      
     <script  src="{{ url_for('static', filename='ticket.js')}}"></script>
     <script  src="{{ url_for('static', filename='materiel.js')}}"></script>
