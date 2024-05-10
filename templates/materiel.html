@@ -18,10 +18,12 @@
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
               <div class="toast-header custom-header">
-                <i class="fa-solid fa-user-tie rounded me-2"></i> 
+                <i class="fa-regular fa-bell me-2"></i>
                 <strong class="me-auto">Notification</strong>
                 <small>Il y a 2 sec</small>
-                <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+              
+                <button type="button" class="btn-close btn-close-black" data-bs-dismiss="toast" aria-label="Close"></button>
+                
             </div>
               <div class="toast-body custom-body">
                 Le matériel a été mis à jour avec succès.
@@ -216,61 +218,9 @@
         </div>
     </div>
 
-      <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        const modifMaterialButton = document.getElementById('modifMaterialButton');
-    
-        // Ajoutez un gestionnaire d'événements clic au bouton de modification
-        modifMaterialButton.addEventListener('click', function() {
-            // Récupérez la ligne sélectionnée (avec le radio check)
-            const selectedRow = document.querySelector('input[name="selectedRow"]:checked');
-    
-            if (selectedRow) {
-                // Récupérez les données de la ligne sélectionnée
-                const row = selectedRow.closest('tr');
-                const id = row.cells[1].textContent;
-                const designation = row.cells[2].textContent;
-                const marque = row.cells[3].textContent;
-                const modele = row.cells[4].textContent;
-                const mac = row.cells[5].textContent;
-                const ip = row.cells[6].textContent;
-                const network = row.cells[7].textContent;
-                const location = row.cells[8].textContent;
-                const username = row.cells[9].textContent;
-    
-                // Remplissez les champs du formulaire dans le modal avec ces données
-                document.getElementById('materialId2').textContent = id;
-                document.getElementById('materialId').value = id;
-                document.getElementById('materialName').value = designation;
-                document.getElementById('materialMarque').value = marque;
-                document.getElementById('materialModele').value = modele;
-                document.getElementById('materialMac').value = mac;
-                document.getElementById('materialIp').value = ip;
-                document.getElementById('materialNetwork').value = network;
-                document.getElementById('materialLocation').value = location;
-                document.getElementById('materialUsername').value = username;
-    
-                // Ouvrez le modal
-                const myModal = new bootstrap.Modal(document.getElementById('modifMaterialModal'));
-                myModal.show();
-            } else {
-                // Aucune ligne sélectionnée, affichez un message d'erreur ou faites autre chose
-                console.log('Aucune ligne sélectionnée.');
-            }
-        });
-    });
-        // Affichage notif
-        const toastLiveExample = document.getElementById('liveToast')
-        const updateSuccess = {{ update_success|tojson|safe }};
-        if (updateSuccess) {
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-        toastBootstrap.show()
-    }
-
-    
-        </script>
+     
     <script  src="{{ url_for('static', filename='ticket.js')}}"></script>
-    <script  src="{{ url_for('static', filename='modal.js')}}"></script>
+    <script  src="{{ url_for('static', filename='materiel.js')}}"></script>
 
     </body>
     

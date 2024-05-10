@@ -1,9 +1,21 @@
 <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
 <nav class="navbar sticky-top bg-body-tertiary">
     <div class="container-fluid">   
+      
       <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
         <i class="fa-solid fa-bars"></i>
       </button>
+
+      <div class="dropdown">
+        <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-solid fa-user"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" href="#">Action</a></li>
+          <li><a class="dropdown-item" href="#">Another action</a></li>
+          <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+      </div>
       
       <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
@@ -23,10 +35,10 @@
                     <i class="fa-solid fa-cart-flatbed pe-2"></i>Gestion Matériel
                 </a>
               
-                <ul class="dropdown-menu dropdown-menu-end">
-                  <li><a class="dropdown-item" href="{{ url_for('materiel') }}">Informatique</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <ul class="dropdown-menu dropdown-menu-end w-100 text-center">
+                  <li><a class="dropdown-item text-white" href="{{ url_for('materiel') }}"><i class="fa-solid fa-computer pe-2"></i>Informatique</a></li>
+                  <li><a class="dropdown-item text-white" href="#">Another action</a></li>
+                  <li><a class="dropdown-item text-white" href="#">Something else here</a></li>
                 </ul>
               </div>
             

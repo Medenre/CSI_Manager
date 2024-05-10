@@ -166,12 +166,7 @@ def init_app(app):  #POUR INIT APP.PY
             flash(f'Erreur lors de la mise à jour du matériel: {str(e)}', 'error')
         
         return redirect(url_for('materiel'))
-    
-    @app.route('/clear_update_success', methods=['GET'])
-    def clear_update_success():
-        session.pop('update_success', None)
-    return 'Success'
-    
+         
     
     @app.route('/respond_ticket/<int:ticket_id>', methods=['GET', 'POST'])
     def respond_ticket(ticket_id):
