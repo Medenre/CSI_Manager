@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>CSI_Manager</title>
+        <!-- LOGIN CSS-->
+        <link href="{{ url_for('static', filename='login.css')}}" rel="stylesheet">
+        <!-- Bootstrap Core CSS -->
+        <link href="{{ url_for('static', filename='bootstrap.min.css')}}" rel="stylesheet">
+    </head>
+
+    <body>
+        
+        <div class="container">
+            <form action="{{url_for('create_ticket')}}" method="post" class="form">
+                <div class="title">Demande d'assistance</div>
+                <input required="" type="text" placeholder="Nom Prénom" name="username" class="input">
+                
+                <div class="custom-select"> 
+                    <select required="" name="location" class="input">
+                        <option value="">Sélectionner une localisation </option>
+                        {% for location in locations %}
+                            <option value="{{ location.rooms }}">{{ location.rooms }}</option>
+                        {% endfor %}
+                    </select>
+                <div class="select-arrow"></div>
+                </div>  
+
+                <input required="" maxlength="50" type="text" placeholder="Intitulé (50 caractères max)" name="title" class="input">
+                <textarea placeholder="Description " name="description" ></textarea>
+                <button>Envoyer</button>
+            </form>
+
+            
+            <form action="{{url_for('login')}}" method="post" class="form">
+                <div class="title">Connexion</div>
+                <input required="" type="text" placeholder="Identifiant" name="username" class="input">
+                <input required="" type="password" placeholder="Mot de passe" name="password" class="input">
+                <button type="submit">Se connecter</button>
+
+                    {% if error %}
+                    <li class="error-message">{{ error }}</li>
+                    {% endif %}
+
+            </form>
+        </div>
+
+    </body>
+
+</html>
