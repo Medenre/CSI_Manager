@@ -14,16 +14,18 @@
 <h1>CSI_Manager</h1>
     <body>
 
-        <form class="form-login" action="">
+        <form class="form-login mx-auto my-auto" action="{{url_for('login')}}" method="post">
         <div class="mb-3">
             <label class="form-label">Identifiant : </label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Identifiant">
+            <input type="text" class="form-control" name="username" placeholder="Identifiant">
           </div>
           <div class="mb-3">
             <label class="form-label">Mot de passe : </label>
-            <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="Mot de passe">
+            <input type="password" class="form-control" name="password" placeholder="Mot de passe">
           </div>
-            <button type="submité" class="btn btn-primary">Se connecter</button>
+            <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">Se connecter</button>
+          </div>
         </form>
     
     </body>

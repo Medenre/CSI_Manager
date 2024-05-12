@@ -1,6 +1,13 @@
+h1 {
+    color: rgb(255, 255, 255);
+    padding: 1rem;
+}
 .form-login {
-    width: 40%;
+    border: 0.2rem solid rgb(255, 255, 255);
+    border-radius: .5rem ;
+    background-color: rgb(51, 50, 65);
+    width: 23rem;
     padding: 2rem;
-    border: 2px;
-    border-color: brown;
+
+
 }
