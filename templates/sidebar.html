@@ -13,7 +13,7 @@
         <ul class="dropdown-menu dropdown-menu-end">
           <li><a class="dropdown-item" href="#">Action</a></li>
           <li><a class="dropdown-item" href="#">Another action</a></li>
-          <li><a class="dropdown-item" href="{{ url_for('logout') }}">Se déconnecter</a></li>
+          <li><a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fa-solid fa-right-to-bracket pe-2"></i>Se déconnecter</a></li>
         </ul>
       </div>
       
@@ -28,6 +28,7 @@
             <div class="d-grid gap-2 ">
                 <a class="btn btn-outline-light" href="{{ url_for('home') }}" role="button"><i class="fa-solid fa-gauge pe-2"></i>Dashboard</a>
                 <a class="btn btn-outline-light mt-2" href="{{ url_for('ticket') }}" role="button"><i class="fa-solid fa-ticket pe-2"></i>Tickets</a>
+                <a class="btn btn-outline-light mt-2" href="{{ url_for('emb_deb') }}" role="button">Embarquement <i class="fa-solid fa-person-military-to-person ps-2 pe-2"></i> Débarquement</a>
             </div>
 
             <div class="dropdown d-grid gap-2 mt-3">
