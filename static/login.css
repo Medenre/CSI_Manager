@@ -1,19 +1,5 @@
 /* static/css/login.css */
 
-
-.bg {
-    background-image: url("../static/images/login_bg.jpg");
-    background-size: cover;
-    background-position: center;
-    height: 100%;
-    width: 100%;
-    filter: contrast(1.1); /* Augmente le contraste */
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1; /* Place le fond derrière les autres éléments */
-}
-
 .custom-navbar {
     background-color: rgba(59, 63, 66, 0.6); /* Fond semi-transparent */
     backdrop-filter: blur(3px); /* Effet de flou */
@@ -27,13 +13,11 @@ label {
     color: aliceblue;
 }
 
-.form-login {
+.custom-ticket {
     border: 0.2rem solid rgb(255, 255, 255);
     border-radius: .5rem;
     background-color: rgba(59, 63, 66, 0.6); /* Fond semi-transparent */
-    backdrop-filter: blur(3px); /* Effet de flou */
     width: 23rem;
     padding: 2rem;
-    z-index: 1
-    
+
 }

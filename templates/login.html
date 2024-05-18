@@ -17,7 +17,7 @@
     
     <nav class="navbar">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">CSI_Manager</a>
+        <a class="navbar-brand " href="#">CSI_Manager</a>
 
         <div class="dropdown dropstart">
           <button type="button" class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
@@ -40,19 +40,73 @@
       </div>
     </nav>
 
-    <!-- <form class="form-login mx-auto my-auto" action="{{ url_for('login') }}" method="post">
-        <div class="mb-3">
-            <label class="form-label">Identifiant :</label>
-            <input type="text" class="form-control custom-input" name="username" placeholder="Identifiant">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Mot de passe :</label>
-            <input type="password" class="form-control" name="password" placeholder="Mot de passe">
-        </div>
+ 
+    <form id="form-ticket" class="custom-ticket mx-auto my-5" action="{{url_for('create_ticket')}}" method="post">
+        <h3 class="text-success mb-3">Demande d'assistance</h3>
+        
+        <label class="form-label">NOM Prénom *</label>
+        <input type="text" class="form-control mb-3" required="" name="username">
+        
+        <label class="form-label">Localisation *</label>
+        <select class="form-select mb-3" name="location" required="">
+          <option value="">Selectionnez une localisation</option>
+          {% for location in locations %}
+              <option value="{{ location.rooms }}">{{ location.rooms }}</option>
+          {% endfor %}
+        </select>
+
+        <label class="form-label">Intitulé *</label>
+        <input type="text" class="form-control mb-3" required="" name="title">
+
+        <label class="form-label">Description</label>
+        <textarea class="form-control mb-3" name="description" rows="3"></textarea>
+        
         <div class="d-grid gap-2">
-            <button type="submit" class="btn btn-primary">Se connecter</button>
+          <button id="submitBtn" class="btn btn-outline-success" type="submit">
+            <span id="submitText">Envoyer</span>
+            <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+            <span id="loadingText" class="d-none">Chargement...</span>
+        </button>
         </div>
-    </form>  -->
+    </form>
+
+    <!-- NOTIFICATION TOAST -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <i class="fa-regular fa-bell me-2"></i>
+          <strong class="me-auto">Notification</strong>
+          <small>Il y a 2 sec</small>
+        
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          
+      </div>
+        <div class="toast-body">
+          Une demande d'assistance à été envoyé ! 
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById('form-ticket').addEventListener('submit', function() {
+          var submitBtn = document.getElementById('submitBtn');
+          var submitText = document.getElementById('submitText');
+          var loadingSpinner = document.getElementById('loadingSpinner');
+          var loadingText = document.getElementById('loadingText');
+
+          submitBtn.disabled = true; // Désactiver le bouton pour éviter les soumissions multiples
+          submitText.classList.add('d-none'); // Cacher le texte du bouton
+          loadingSpinner.classList.remove('d-none'); // Afficher l'animation de chargement
+          loadingText.classList.remove('d-none'); // Afficher le texte de chargement
+    });
+
+    const toastLiveExample = document.getElementById('liveToast')
+    const createTicket = JSON.parse('{{ create_ticket|tojson|safe }}');
+    if (createTicket) {
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+    toastBootstrap.show()
+}
+    </script>
 </body>
 
 </html>

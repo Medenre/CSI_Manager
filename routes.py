@@ -9,7 +9,8 @@ def init_app(app):  #POUR INIT APP.PY
     @app.route('/')
     def index():
         locations = Location.query.all()
-        return render_template('login.html', locations = locations)
+        create_ticket = session.pop('create_ticket', False)
+        return render_template('login.html', locations = locations, create_ticket=create_ticket)
     
     #PAGE DASHBOARD
     @app.route('/home')
@@ -104,6 +105,7 @@ def init_app(app):  #POUR INIT APP.PY
             
             db.session.add(ticket)
             db.session.commit()
+            session['create_ticket'] = True
             return redirect(url_for('index'))
 
     @app.route('/create_material', methods=['GET', 'POST'])
