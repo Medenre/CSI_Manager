@@ -29,7 +29,8 @@ label {
 
 .search-container {
     position: relative;
-    /* Adjust to match the desired width */
+    right: 30px;
+    
 }
 
 .results-container {
