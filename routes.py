@@ -1,10 +1,16 @@
-from flask import render_template, request, abort, redirect, url_for, session, flash
+from flask import render_template, request, abort, redirect, url_for, session, flash, send_from_directory
 from models import db, User,Ticket,Location,Materiel
 from datetime import datetime
 from forms import MaterielForm
+import os
+
+
 
 def init_app(app):  #POUR INIT APP.PY
 
+        # Dossier pour les fichiers uploadés
+    UPLOAD_FOLDER = 'uploads'
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     #PAGE D'ACCEUIL
     @app.route('/')
     def index():
@@ -80,7 +86,20 @@ def init_app(app):  #POUR INIT APP.PY
                 error = "Identifiant ou mot de passe incorrect."
         return render_template('login.html', error=error)
     
-    
+    @app.route('/search', methods=['GET'])
+    def search():
+        query = request.args.get('query', '').lower()
+        matching_files = []
+        for filename in os.listdir(app.config['UPLOAD_FOLDER']):
+            if query in filename.lower():
+                matching_files.append(filename)
+        return {'results': matching_files}
+
+    @app.route('/download/<filename>')
+    def download(filename):
+        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
     @app.route('/admin/dashboard')  
     def admin_dashboard():
         if 'user_id' not in session or not session['is_admin']:
