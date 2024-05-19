@@ -2,6 +2,8 @@ from flask import render_template, request, abort, redirect, url_for, session, f
 from models import db, User,Ticket,Location,Materiel
 from datetime import datetime
 from forms import MaterielForm
+from werkzeug.utils import secure_filename
+from werkzeug.exceptions import RequestEntityTooLarge
 import os
 
 
@@ -11,6 +13,8 @@ def init_app(app):  #POUR INIT APP.PY
         # Dossier pour les fichiers uploadés
     UPLOAD_FOLDER = 'uploads'
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+    app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Limite de taille de fichier à 16MB
+
     #PAGE D'ACCEUIL
     @app.route('/')
     def index():
@@ -44,7 +48,7 @@ def init_app(app):  #POUR INIT APP.PY
         current_user = session.get('username')
         return render_template('ticket.html', tickets=tickets, current_user=current_user)
     
-    #PAGE DASHBOARD
+    #PAGE EMBARQUEMENT/DEBARQUEMENT
     @app.route('/emb_deb')
     def emb_deb():
         if 'user_id' not in session:
@@ -53,6 +57,16 @@ def init_app(app):  #POUR INIT APP.PY
         current_user = session.get('username')
 
         return render_template('emb_deb.html' , current_user=current_user)
+    
+    #PAGE EMBARQUEMENT/DEBARQUEMENT
+    @app.route('/file_manager')
+    def file_manager():
+        if 'user_id' not in session:
+           flash('Veuillez vous connecter pour accéder à cette fonctionnalité.', 'warning')
+           return redirect(url_for('index'))
+        current_user = session.get('username')
+
+        return render_template('file_manager.html' , current_user=current_user)
     
 
     # PAGE MATERIEL
@@ -86,6 +100,7 @@ def init_app(app):  #POUR INIT APP.PY
                 error = "Identifiant ou mot de passe incorrect."
         return render_template('login.html', error=error)
     
+    # FONCTION RECHERCHER UN DOCUMENT /LOGIN
     @app.route('/search', methods=['GET'])
     def search():
         query = request.args.get('query', '').lower()
@@ -95,10 +110,33 @@ def init_app(app):  #POUR INIT APP.PY
                 matching_files.append(filename)
         return {'results': matching_files}
 
+    # FONCTION TELECHARGER UN DOCUMENT /LOGIN
     @app.route('/download/<filename>')
     def download(filename):
         return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
+    # FONCTION UPLOADER UN DOCUMENT
+    @app.route('/upload', methods=['POST'])
+    def upload_file():
+        if 'file' not in request.files:
+            flash('No file part', 'error')
+            return redirect(url_for('file_manager'))
+        file = request.files['file']
+        if file.filename == '':
+            flash('No selected file', 'error')
+            return redirect(url_for('file_manager'))
+        if file:
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            session['upload_file'] = True
+            flash('File successfully uploaded', 'success')
+            return redirect(url_for('file_manager'))
+
+    # SI FICHIER TROP VOLUMINEUX
+    @app.errorhandler(RequestEntityTooLarge)
+    def handle_file_too_large(error):
+        flash('File is too large. Maximum size allowed is 16MB.', 'error')
+        return redirect(url_for('file_manager'))
 
     @app.route('/admin/dashboard')  
     def admin_dashboard():
