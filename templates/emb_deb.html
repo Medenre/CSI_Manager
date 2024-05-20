@@ -13,6 +13,8 @@
     {% include 'sidebar.html' %}
 
     <body>
+        <button class="btn btn-outline-success ms-2 m-1" type="button">Ajouter un utilisateur</button>
+
         <div class="container-fluid">
             <div class="row align-items-start">
                 <div class="col">
@@ -33,6 +35,22 @@
                         </table>
                 </div>
                 <div class="col">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Nom">
+                        <input type="text" class="form-control" placeholder="Prénom">
+                    </div>
+
+                <div class="my-3">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                        <label class="form-check-label" for="inlineRadio1">Embarquement</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                        <label class="form-check-label" for="inlineRadio2">Débarquement</label>
+                    </div>
+                </div>
+                 
 
                 </div> 
             </div>
