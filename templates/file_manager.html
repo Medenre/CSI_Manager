@@ -13,41 +13,47 @@
 
     <body>
 
-        <h2>Uploader un document</h2>
-    <div class="container">
+        
+    <div class="container-fluid">
         <div class="row align-items-start">
             <div class="col">
-                <div class="form-upload ">
+                <h2 class="my-3">Uploader un fichier</h2>
+                <div class="form-upload mb-3">
                     <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
                     <div class="input-group">
                         <input type="file" class="form-control" id="file-input" name="file">
-                        <button class="btn btn-outline-light" type="submit">Uploader</button>
+                        <button class="btn btn-outline-primary" type="submit">Uploader</button>
                     </div>
                     </form>
                 </div>
+                <label class="mb-3">Taille maximale : 16 Mo</label>
+                <!-- Section pour afficher les messages flash -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div id="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash-message {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endwith %}
             </div>
+
             <div class="col">
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action">A second link item</a>
-                    <a href="#" class="list-group-item list-group-item-action">A third link item</a>
-                    <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
-                  </div>
+                <h2 class="my-3">Liste des fichiers</h2>
+                <div class="list-group custom-list">
+                    {% for file in files %}
+                        <a href="{{ url_for('download', filename=file) }}" class="list-group-item list-group-item-action">{{ file }}</a>
+                    {% endfor %}
                 </div>
-            </div>
+                </div>
+        </div>
+    </div>
        
 
         
     
-    <!-- Section pour afficher les messages flash -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <div id="flash-messages">
-                {% for category, message in messages %}
-                    <div class="flash-message {{ category }}">{{ message }}</div>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
+    
 
     </body>
 

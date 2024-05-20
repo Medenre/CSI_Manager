@@ -58,7 +58,7 @@ def init_app(app):  #POUR INIT APP.PY
 
         return render_template('emb_deb.html' , current_user=current_user)
     
-    #PAGE EMBARQUEMENT/DEBARQUEMENT
+    #PAGE FILE MANAGER
     @app.route('/file_manager')
     def file_manager():
         if 'user_id' not in session:
@@ -66,7 +66,9 @@ def init_app(app):  #POUR INIT APP.PY
            return redirect(url_for('index'))
         current_user = session.get('username')
 
-        return render_template('file_manager.html' , current_user=current_user)
+        files = os.listdir(app.config['UPLOAD_FOLDER'])
+
+        return render_template('file_manager.html' , current_user=current_user, files=files)
     
 
     # PAGE MATERIEL
@@ -123,19 +125,19 @@ def init_app(app):  #POUR INIT APP.PY
             return redirect(url_for('file_manager'))
         file = request.files['file']
         if file.filename == '':
-            flash('No selected file', 'error')
+            flash('Aucun fichier sélectionné', 'error')
             return redirect(url_for('file_manager'))
         if file:
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             session['upload_file'] = True
-            flash('File successfully uploaded', 'success')
+            flash('Fichier hébergé avec succès ! ', 'success')
             return redirect(url_for('file_manager'))
 
     # SI FICHIER TROP VOLUMINEUX
     @app.errorhandler(RequestEntityTooLarge)
     def handle_file_too_large(error):
-        flash('File is too large. Maximum size allowed is 16MB.', 'error')
+        flash('Fichier trop volumineux ! Taille maximale : 16 Mo.', 'error')
         return redirect(url_for('file_manager'))
 
     @app.route('/admin/dashboard')  
