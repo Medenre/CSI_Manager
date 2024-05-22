@@ -21,6 +21,10 @@ class Location(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     rooms = db.Column(db.Text)
 
+class Droitlecteur(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    rooms = db.Column(db.Text)
+
 class Materiel(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     designation = db.Column(db.String(100))

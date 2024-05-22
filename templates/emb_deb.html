@@ -25,6 +25,8 @@
                                     <th class="sortable"> Prénom <span class="icon-arrow">&uarr;</span></th>
                                     <th class="sortable"> E / D <span class="icon-arrow">&uarr;</span></th>
                                     <th class="sortable"> Date <span class="icon-arrow">&uarr;</span></th>
+                                    <th class="sortable"> Crée le <span class="icon-arrow">&uarr;</span></th>
+                                    <th class="sortable"> Admin <span class="icon-arrow">&uarr;</span></th>
                                     <th class="sortable"> Statut <span class="icon-arrow">&uarr;</span></th>
                                 </tr>
                             </thead >
@@ -34,13 +36,13 @@
                             </tbody>
                         </table>
                 </div>
-                <div class="col">
+                <div class="col-4">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Nom">
                         <input type="text" class="form-control" placeholder="Prénom">
                     </div>
 
-                <div class="my-3">
+                <div class="my-2">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
                         <label class="form-check-label" for="inlineRadio1">Embarquement</label>
@@ -50,8 +52,13 @@
                         <label class="form-check-label" for="inlineRadio2">Débarquement</label>
                     </div>
                 </div>
-                 
 
+                <label class="form-label">Pour le : </label>
+                <input type="date" class="form-control" id="dateInput">
+                
+                
+                <input type="input" class="form-control mt-3" placeholder="Ancienne affectation / Future affectation / Fonction">
+                <div class="custom-border my-4"></div>
                 </div> 
             </div>
         </div>               
@@ -60,6 +67,7 @@
 
             </div>
 
+            <script src="{{ url_for('static', filename='emb_deb.js') }}"></script>
     
     </body>
 
