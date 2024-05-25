@@ -1,13 +1,37 @@
 <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
+
 <nav class="navbar sticky-top bg-body-tertiary">
     <div class="container-fluid">   
       
       <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
         <i class="fa-solid fa-bars"></i>
       </button>
+      
+      <div class="d-flex">
+      <div class="dropdown">
+        <button type="button" class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+          <i class="fa-solid fa-bell"></i>
+        </button>
+        <form class="dropdown-menu p-4" action="{{ url_for('login') }}" method="post" >
+          <div class="mb-3">
+            <label for="exampleDropdownFormEmail2" class="form-label">Identifiant</label>
+            <input type="text" class="form-control" name="username" placeholder="">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Mot de passe</label>
+            <input type="password" class="form-control" name="password" placeholder="">
+          </div>
+          <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-primary btn-sm">Se connecter</button>
+        </div>
+        </form>
+      </div>
+
+
+
 
       <div class="dropdown">
-        <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <button class="btn btn-outline-light dropdown-toggle ms-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="fa-solid fa-user"></i>
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
@@ -16,6 +40,9 @@
           <li><a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fa-solid fa-right-to-bracket pe-2"></i>Se déconnecter</a></li>
         </ul>
       </div>
+    </div>
+
+
       
       <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
