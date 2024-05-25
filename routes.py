@@ -36,7 +36,17 @@ def init_app(app):  #POUR INIT APP.PY
         in_progress_tickets = Ticket.query.filter_by(status='En cours').count()
         resolved_tickets = Ticket.query.filter_by(status='Clôturer').count()
 
-        return render_template('index.html' , current_user=current_user,open_tickets=open_tickets, closed_tickets=closed_tickets, in_progress_tickets=in_progress_tickets, resolved_tickets=resolved_tickets)
+        # Query for tickets by month
+        tickets = Ticket.query.all()
+        tickets_by_month = {}
+        for ticket in tickets:
+                month = datetime.strptime(ticket.date, "%d-%m-%Y").strftime("%Y-%m")
+                if month in tickets_by_month:
+                    tickets_by_month[month] += 1
+                else:
+                    tickets_by_month[month] = 1
+
+        return render_template('index.html' , tickets_by_month=tickets_by_month,current_user=current_user,open_tickets=open_tickets, closed_tickets=closed_tickets, in_progress_tickets=in_progress_tickets, resolved_tickets=resolved_tickets)
     
     # PAGE TICKET
     @app.route('/ticket')
@@ -133,6 +143,16 @@ def init_app(app):  #POUR INIT APP.PY
             session['upload_file'] = True
             flash('Fichier hébergé avec succès ! ', 'success')
             return redirect(url_for('file_manager'))
+    
+    @app.route('/delete/<filename>', methods=['POST'])
+    def delete_file(filename):
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            flash(f'File {filename} deleted', 'success')
+        else:
+            flash(f'File {filename} not found', 'error')
+        return redirect(url_for('file_manager'))
 
     # SI FICHIER TROP VOLUMINEUX
     @app.errorhandler(RequestEntityTooLarge)
