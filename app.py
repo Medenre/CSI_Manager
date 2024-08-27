@@ -8,7 +8,15 @@ app.config['SECRET_KEY'] = b'\x97\xfd\xb8\x98j-\xd1;$\xbb\xe2Z\xc6\x0c\x87t' #py
 
 @app.after_request
 def add_header(response):
-    response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' https://kit.fontawesome.com; style-src 'self' https://kit.fontawesome.com;"
+    csp = (
+        "default-src 'self'; "
+        "script-src 'self' https://kit.fontawesome.com https://cdn.jsdelivr.net; "
+        "style-src 'self' https://cdn.jsdelivr.net https://kit.fontawesome.com 'unsafe-inline'; "
+        "font-src 'self' https://cdn.jsdelivr.net https://ka-f.fontawesome.com; "
+        "img-src 'self' data:; "
+        "connect-src 'self' https://ka-f.fontawesome.com;"
+    )
+    response.headers['Content-Security-Policy'] = csp
     return response
 
 # Initialise la base de données
