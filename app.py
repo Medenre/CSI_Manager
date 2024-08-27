@@ -6,18 +6,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SECRET_KEY'] = b'\x97\xfd\xb8\x98j-\xd1;$\xbb\xe2Z\xc6\x0c\x87t' #python -c 'import os; print(os.urandom(16))'
 
-@app.after_request
-def add_header(response):
-    csp = (
-        "default-src 'self'; "
-        "script-src 'self' https://kit.fontawesome.com https://cdn.jsdelivr.net; "
-        "style-src 'self' https://cdn.jsdelivr.net https://kit.fontawesome.com 'unsafe-inline'; "
-        "font-src 'self' https://cdn.jsdelivr.net https://ka-f.fontawesome.com; "
-        "img-src 'self' data:; "
-        "connect-src 'self' https://ka-f.fontawesome.com;"
-    )
-    response.headers['Content-Security-Policy'] = csp
-    return response
+
 
 # Initialise la base de données
 db.init_app(app)
