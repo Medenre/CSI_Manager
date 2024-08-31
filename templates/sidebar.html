@@ -54,24 +54,24 @@
 
             <div class="d-grid gap-2 ">
                 <a class="btn btn-outline-light" href="{{ url_for('home') }}" role="button"><i class="bi bi-motherboard pe-2" style="font-size: 17px"></i>Dashboard</a>
-                <a class="btn btn-outline-light mt-2" href="{{ url_for('ticket') }}" role="button"><i class="fa-solid fa-ticket pe-2"></i>Tickets</a>
-                <a class="btn btn-outline-light mt-2" href="{{ url_for('emb_deb') }}" role="button">Embarquement <i class="fa-solid fa-person-military-to-person ps-2 pe-2"></i> Débarquement</a>
+                <a class="btn btn-outline-light mt-2" href="{{ url_for('ticket') }}" role="button"><i class="bi bi-ticket-detailed pe-2" style="font-size: 17px"></i>Tickets</a>
+                <a class="btn btn-outline-light mt-2" href="{{ url_for('emb_deb') }}" role="button">Embarquement <i class="bi bi-person-raised-hand ps-2 pe-2" style="font-size: 17px"></i> Débarquement</a>
             </div>
 
             <div class="dropdown d-grid gap-2 mt-3">
                 <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa-solid fa-cart-flatbed pe-2"></i>Gestion Matériel
+                  <i class="bi bi-box-seam pe-2" style="font-size: 17px"></i>Gestion Matériel
                 </a>
               
                 <ul class="dropdown-menu dropdown-menu-end w-100 text-center">
-                  <li><a class="dropdown-item text-white" href="{{ url_for('materiel') }}"><i class="fa-solid fa-computer pe-2"></i>Informatique</a></li>
+                  <li><a class="dropdown-item text-white" href="{{ url_for('materiel') }}"><i class="bi bi-pc-display pe-2" style="font-size: 17px"></i>Informatique</a></li>
                   <li><a class="dropdown-item text-white" href="#">Another action</a></li>
                   <li><a class="dropdown-item text-white" href="#">Something else here</a></li>
                 </ul>
             </div>
               
             <div class="d-grid gap-2 mt-3">
-              <a class="btn btn-outline-light" href="{{ url_for('file_manager') }}" role="button"><i class="fa-solid fa-file-import pe-2"></i>Dépôt de fichier</a>
+              <a class="btn btn-outline-light" href="{{ url_for('file_manager') }}" role="button"><i class="bi bi-cloud-upload pe-2" style="font-size: 17px"></i>Dépôt de fichier</a>
             </div>
         
         </div>
