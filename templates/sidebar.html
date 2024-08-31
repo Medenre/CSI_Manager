@@ -1,17 +1,16 @@
-<script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css')}}">
 
 <nav class="navbar sticky-top bg-body-tertiary">
     <div class="container-fluid">   
       
       <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-        <i class="fa-solid fa-bars"></i>
+        <i class="bi bi-justify" style="font-size: 17px"></i>
       </button>
       
       <div class="d-flex">
       <div class="dropdown">
         <button type="button" class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-          <i class="fa-solid fa-bell"></i>
+          <i class="bi bi-bell" style="font-size: 17px"></i>
         </button>
         <form class="dropdown-menu p-4" action="{{ url_for('login') }}" method="post" >
           <div class="mb-3">
@@ -33,7 +32,7 @@
 
       <div class="dropdown">
         <button class="btn btn-outline-light dropdown-toggle ms-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <i class="fa-solid fa-user"></i>
+          <i class="bi bi-person-fill-gear" style="font-size: 17px"></i>
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
           <li><a class="dropdown-item" href="#">Action</a></li>
@@ -54,7 +53,7 @@
         <div class="offcanvas-body">
 
             <div class="d-grid gap-2 ">
-                <a class="btn btn-outline-light" href="{{ url_for('home') }}" role="button"><i class="fa-solid fa-gauge pe-2"></i>Dashboard</a>
+                <a class="btn btn-outline-light" href="{{ url_for('home') }}" role="button"><i class="bi bi-motherboard pe-2" style="font-size: 17px"></i>Dashboard</a>
                 <a class="btn btn-outline-light mt-2" href="{{ url_for('ticket') }}" role="button"><i class="fa-solid fa-ticket pe-2"></i>Tickets</a>
                 <a class="btn btn-outline-light mt-2" href="{{ url_for('emb_deb') }}" role="button">Embarquement <i class="fa-solid fa-person-military-to-person ps-2 pe-2"></i> Débarquement</a>
             </div>
