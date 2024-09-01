@@ -1,7 +1,7 @@
 /* static/css/login.css */
 
 .custom-navbar {
-    background-color: rgba(59, 63, 66, 0.6); /* Fond semi-transparent */
+    background-color: rgb(241, 241, 241); /* Fond semi-transparent */
     backdrop-filter: blur(3px); /* Effet de flou */
 }
 
@@ -10,21 +10,22 @@ input {
 }
 
 label {
-    color: aliceblue;
+    color: rgb(0, 0, 0);
 }
 
 .custom-ticket {
-    border: 0.2rem solid rgb(255, 255, 255);
+    border: 0.2rem solid rgb(206, 206, 206);
     border-radius: .5rem;
-    background-color: rgba(59, 63, 66, 0.6); /* Fond semi-transparent */
+    background-color: #f4f4f4; /* Fond semi-transparent */
     width: 23rem;
     padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
 }
 
 .custom-navbar {
-    border-bottom: 0.1rem solid rgb(255, 255, 255);
-    background-color: #2B3035;
+    border-bottom: 0.1rem solid rgb(206, 206, 206);
+    background-color: #f4f4f4;
 }
 
 .search-container {
@@ -42,7 +43,7 @@ label {
     top: 100%; /* Position it below the input */
     left: 0;
     right: 0;
-    background-color: #2B3035;
+    background-color: #f4f4f4;
     z-index: 1000;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -59,5 +60,5 @@ label {
 }
 
 .results-container li:hover {
-    background-color: rgb(73, 78, 81);
+    background-color: #d6d6d6;
 }

@@ -3,13 +3,13 @@
 <nav class="navbar sticky-top bg-body-tertiary">
     <div class="container-fluid">   
       
-      <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+      <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
         <i class="bi bi-justify" style="font-size: 17px"></i>
       </button>
       
       <div class="d-flex">
       <div class="dropdown">
-        <button type="button" class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+        <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
           <i class="bi bi-bell" style="font-size: 17px"></i>
         </button>
         <form class="dropdown-menu p-4" action="{{ url_for('login') }}" method="post" >
@@ -22,7 +22,7 @@
             <input type="password" class="form-control" name="password" placeholder="">
           </div>
           <div class="d-grid gap-2">
-          <button type="submit" class="btn btn-primary btn-sm">Se connecter</button>
+          <button type="submit" class="btn btn-outline-primary">Se connecter</button>
         </div>
         </form>
       </div>
@@ -31,7 +31,7 @@
 
 
       <div class="dropdown">
-        <button class="btn btn-outline-light dropdown-toggle ms-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <button class="btn btn-outline-primary dropdown-toggle ms-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="bi bi-person-fill-gear" style="font-size: 17px"></i>
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
@@ -53,13 +53,13 @@
         <div class="offcanvas-body">
 
             <div class="d-grid gap-2 ">
-                <a class="btn btn-outline-light" href="{{ url_for('home') }}" role="button"><i class="bi bi-motherboard pe-2" style="font-size: 17px"></i>Dashboard</a>
-                <a class="btn btn-outline-light mt-2" href="{{ url_for('ticket') }}" role="button"><i class="bi bi-ticket-detailed pe-2" style="font-size: 17px"></i>Tickets</a>
-                <a class="btn btn-outline-light mt-2" href="{{ url_for('emb_deb') }}" role="button">Embarquement <i class="bi bi-person-raised-hand ps-2 pe-2" style="font-size: 17px"></i> Débarquement</a>
+                <a class="btn btn-outline-primary" href="{{ url_for('home') }}" role="button"><i class="bi bi-motherboard pe-2" style="font-size: 17px"></i>Dashboard</a>
+                <a class="btn btn-outline-primary mt-2" href="{{ url_for('ticket') }}" role="button"><i class="bi bi-ticket-detailed pe-2" style="font-size: 17px"></i>Tickets</a>
+                <a class="btn btn-outline-primary mt-2" href="{{ url_for('emb_deb') }}" role="button">Embarquement <i class="bi bi-person-raised-hand ps-2 pe-2" style="font-size: 17px"></i> Débarquement</a>
             </div>
 
             <div class="dropdown d-grid gap-2 mt-3">
-                <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="bi bi-box-seam pe-2" style="font-size: 17px"></i>Gestion Matériel
                 </a>
               
@@ -71,7 +71,7 @@
             </div>
               
             <div class="d-grid gap-2 mt-3">
-              <a class="btn btn-outline-light" href="{{ url_for('file_manager') }}" role="button"><i class="bi bi-cloud-upload pe-2" style="font-size: 17px"></i>Dépôt de fichier</a>
+              <a class="btn btn-outline-primary" href="{{ url_for('file_manager') }}" role="button"><i class="bi bi-cloud-upload pe-2" style="font-size: 17px"></i>Dépôt de fichier</a>
             </div>
         
         </div>
