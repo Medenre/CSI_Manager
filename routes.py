@@ -1,4 +1,4 @@
-from flask import render_template, request, abort, redirect, url_for, session, flash, send_from_directory
+from flask import render_template, request, abort, redirect, url_for, session, flash, send_from_directory, jsonify
 from models import db, User,Ticket,Location,Materiel
 from datetime import datetime
 from forms import MaterielForm
@@ -52,12 +52,12 @@ def init_app(app):  #POUR INIT APP.PY
     @app.route('/ticket')
     def ticket():
         if 'user_id' not in session:
-           flash('Veuillez vous connecter pour accéder à cette fonctionnalité.', 'warning')
-           return redirect(url_for('index'))
+            flash('Veuillez vous connecter pour accéder à cette fonctionnalité.', 'warning')
+            return redirect(url_for('index'))
         tickets = Ticket.query.all()
         current_user = session.get('username')
         return render_template('ticket.html', tickets=tickets, current_user=current_user)
-    
+        
     #PAGE EMBARQUEMENT/DEBARQUEMENT
     @app.route('/emb_deb')
     def emb_deb():
@@ -278,9 +278,20 @@ def init_app(app):  #POUR INIT APP.PY
         return render_template('diagramme.html', open_tickets=open_tickets, closed_tickets=closed_tickets, in_progress_tickets=in_progress_tickets, resolved_tickets=resolved_tickets)
         
     @app.route('/ticket/<int:ticket_id>')
-    def view_ticket(ticket_id):
+    def get_ticket_details(ticket_id):
+        if 'user_id' not in session:
+            return jsonify({'error': 'Non autorisé'}), 401
+        
         ticket = Ticket.query.get_or_404(ticket_id)
-        return render_template('view_ticket.html', ticket=ticket)
+        return jsonify({
+            'id': ticket.id,
+            'username': ticket.username,
+            'location': ticket.location,
+            'title': ticket.title,
+            'date': ticket.date,
+            'status': ticket.status,
+            'description': ticket.description
+        })
 
     @app.route('/change_status/<int:ticket_id>/<new_status>')
     def change_status(ticket_id, new_status):

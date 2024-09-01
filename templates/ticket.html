@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en" data-bs-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -9,55 +9,182 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='ticket.css')}}">
 </head>
-    {% include 'sidebar.html' %}
+<!-- ticket.html -->
+{% include 'sidebar.html' %}
 
-    <body>
+<div class="search input-group input-group-lg mb-3">
+    <span class="input-group-text" id="inputGroup-sizing-lg">Rechercher un ticket</span>
+    <input type="text" class="form-control" id="searchInput" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+</div>
 
-        <div class="search input-group input-group-lg">
-            <span class="input-group-text" id="inputGroup-sizing-lg">Rechercher un ticket</span>
-            <input type="text" class="form-control" >
-            <!-- <button class="btn btn-success" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button> -->
-          </div>
-        <div class="tablerounededCorner mx-auto">
-        <table class="table table-striped table-hover table align-middle roundedTable mx-auto">
-            <thead class="table-light">
-                <tr>
-                    <th class="sortable" data-column="id"> Id <span class="icon-arrow">&uarr;</span></th>
-                    <th class="sortable" data-column="username"> Utilisateurs <span class="icon-arrow">&uarr;</span></th>
-                    <th class="sortable" data-column="location"> Localisation <span class="icon-arrow">&uarr;</span></th>
-                    <th class="sortable" data-column="title"> Sujet <span class="icon-arrow">&uarr;</span></th>
-                    <th class="sortable" data-column="date"> Date <span class="icon-arrow">&uarr;</span></th>
-                    <th class="sortable" data-column="status"> Statut <span class="icon-arrow">&uarr;</span></th>
-                    <th> Détails </th>
-                </tr>
-            </thead >
-            <tbody class="table-group-divider">
-                {% for ticket in tickets %}
-                <tr>
-                    <td class="fw-bold">{{ticket.id}}</td>
-                    <td>{{ticket.username}}</td>
-                    <td>{{ticket.location}}</td>
-                    <td>{{ticket.title}}</td>
-                    <td>{{ticket.date}}</td>
-                    <td>
-                        {% if ticket.status == 'Ouvert' %}
-                            <p class="status shipped">{{ ticket.status }}</p>
-                        {% elif ticket.status == 'Clôturer' %}
-                            <p class="status delivered">{{ ticket.status }}</p>
-                        {% elif ticket.status == 'En cours' %}
-                            <p class="status pending">{{ ticket.status }}</p>
-                        {% else %}
-                            <p class="status cancelled">{{ ticket.status }}</p>
-                        {% endif %}
-                    </td>
-                    <td><a class="link-info" href="{{ url_for('view_ticket', ticket_id=ticket.id) }}">Voir détails</a></td>
-                
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+<table class="table tablerounededCorner mx-auto">
+    <thead>
+        <tr>
+            <th class="sortable" data-sort="id">Id <span class="icon-arrow">↑</span></th>
+            <th class="sortable" data-sort="username">Utilisateurs <span class="icon-arrow">↑</span></th>
+            <th class="sortable" data-sort="location">Localisation <span class="icon-arrow">↑</span></th>
+            <th class="sortable" data-sort="title">Sujet <span class="icon-arrow">↑</span></th>
+            <th class="sortable" data-sort="date">Date <span class="icon-arrow">↓</span></th>
+            <th class="sortable" data-sort="status">Statut <span class="icon-arrow">↑</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ticket in tickets %}
+        <tr class="clickable-row" data-ticket-id="{{ticket.id}}">
+            <td>{{ticket.id}}</td>
+            <td>{{ticket.username}}</td>
+            <td>{{ticket.location}}</td>
+            <td>{{ticket.title}}</td>
+            <td data-date="{{ticket.date}}">{{ticket.date}}</td>
+            <td>
+                {% if ticket.status == 'Ouvert' %}
+                    <span class="badge bg-success">{{ ticket.status }}</span>
+                {% elif ticket.status == 'Clôturer' %}
+                    <span class="badge bg-danger">{{ ticket.status }}</span>
+                {% elif ticket.status == 'En cours' %}
+                    <span class="badge bg-warning">{{ ticket.status }}</span>
+                {% else %}
+                    <span class="badge bg-secondary">{{ ticket.status }}</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="ticketModal" tabindex="-1" aria-labelledby="ticketModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ticketModalLabel">Détails du ticket</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Le contenu du modal sera chargé dynamiquement ici -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
     </div>
-    <script  src="{{ url_for('static', filename='ticket.js')}}"></script>
-    </body>
-    
-</html>
+  </div>
+</div>
+
+<style>
+    .clickable-row {
+        cursor: pointer;
+    }
+    .clickable-row:hover {
+        background-color: #f5f5f5;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const table = document.querySelector('table');
+    const headers = table.querySelectorAll('th.sortable');
+    let currentSort = { column: 'date', direction: 'desc' };
+
+    // Fonction de recherche
+    searchInput.addEventListener('input', function(event) {
+        const searchText = event.target.value.toLowerCase();
+        filterTickets(searchText);
+    });
+
+    function filterTickets(searchText) {
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(function(row) {
+            const ticketData = row.textContent.toLowerCase();
+            row.style.display = ticketData.includes(searchText) ? '' : 'none';
+        });
+    }
+
+    // Fonction de tri
+    headers.forEach(header => {
+        header.addEventListener('click', () => {
+            const column = header.dataset.sort;
+            const direction = currentSort.column === column && currentSort.direction === 'asc' ? 'desc' : 'asc';
+            sortTable(column, direction);
+            updateSortIcons(header, direction);
+            currentSort = { column, direction };
+        });
+    });
+
+    function sortTable(column, direction) {
+        const rows = Array.from(table.querySelectorAll('tbody tr'));
+        const sortedRows = rows.sort((a, b) => {
+            let aValue, bValue;
+            if (column === 'date') {
+                const aDate = a.querySelector(`td:nth-child(${getColumnIndex(column)})`).dataset.date;
+                const bDate = b.querySelector(`td:nth-child(${getColumnIndex(column)})`).dataset.date;
+                aValue = parseDate(aDate);
+                bValue = parseDate(bDate);
+            } else {
+                aValue = a.querySelector(`td:nth-child(${getColumnIndex(column)})`).textContent.trim();
+                bValue = b.querySelector(`td:nth-child(${getColumnIndex(column)})`).textContent.trim();
+            }
+            
+            if (column === 'date') {
+                return direction === 'desc' ? bValue - aValue : aValue - bValue;
+            } else {
+                return direction === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+            }
+        });
+        table.querySelector('tbody').append(...sortedRows);
+    }
+
+    function parseDate(dateString) {
+        const [day, month, year] = dateString.split('-');
+        return new Date(year, month - 1, day);
+    }
+
+    function getColumnIndex(column) {
+        return Array.from(headers).findIndex(header => header.dataset.sort === column) + 1;
+    }
+
+    function updateSortIcons(clickedHeader, direction) {
+        headers.forEach(header => {
+            header.querySelector('.icon-arrow').textContent = '↕';
+        });
+        clickedHeader.querySelector('.icon-arrow').textContent = direction === 'asc' ? '↑' : '↓';
+    }
+
+    // Tri initial par date (le plus récent en premier)
+    sortTable('date', 'desc');
+    updateSortIcons(document.querySelector('th[data-sort="date"]'), 'desc');
+
+    // Gestion des clics sur les lignes pour ouvrir le modal
+    const rows = table.querySelectorAll('.clickable-row');
+    const modal = new bootstrap.Modal(document.getElementById('ticketModal'));
+    rows.forEach(row => {
+        row.addEventListener('click', function() {
+            const ticketId = this.dataset.ticketId;
+            document.querySelector('#ticketModal .modal-body').innerHTML = `Chargement des détails pour le ticket ${ticketId}...`;
+            modal.show();
+            
+            // Appel AJAX pour récupérer les détails du ticket
+            axios.get(`/ticket/${ticketId}`)
+                .then(response => {
+                    const ticket = response.data;
+                    document.querySelector('#ticketModal .modal-body').innerHTML = `
+                        <h4>Ticket #${ticket.id}</h4>
+                        <p><strong>Utilisateur:</strong> ${ticket.username}</p>
+                        <p><strong>Localisation:</strong> ${ticket.location}</p>
+                        <p><strong>Sujet:</strong> ${ticket.title}</p>
+                        <p><strong>Date:</strong> ${ticket.date}</p>
+                        <p><strong>Statut:</strong> ${ticket.status}</p>
+                        <p><strong>Description:</strong> ${ticket.description}</p>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la récupération des détails du ticket:', error);
+                    document.querySelector('#ticketModal .modal-body').innerHTML = 'Une erreur est survenue lors du chargement des détails du ticket.';
+                });
+        });
+    });
+    });
+</script>
