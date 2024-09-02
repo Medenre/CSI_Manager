@@ -9,9 +9,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='ticket.css')}}">
 </head>
+<body>
+    
+
 <!-- ticket.html -->
 {% include 'sidebar.html' %}
-<body>
+
        
 <div class="search input-group input-group-lg mb-3">
     <span class="input-group-text" id="inputGroup-sizing-lg">Rechercher un ticket</span>
@@ -70,8 +73,7 @@
     </div>
   </div>
 </div>
-
-
+</body>
 <style>
     .clickable-row {
         cursor: pointer;
@@ -79,109 +81,22 @@
     .clickable-row:hover {
         background-color: #f5f5f5;
     }
-
-    .modal-backdrop {
-        z-index: 1040 !important;
-    }
-    .modal {
-        z-index: 1050 !important;
-    }
-    .offcanvas {
-        z-index: 1060 !important;
-    }
+    
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
+<script  src="{{ url_for('static', filename='ticket_search_table.js')}}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         console.log('DOM fully loaded');
-        // Initialisation des composants Bootstrap
-    var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
-    var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
-        return new bootstrap.Dropdown(dropdownToggleEl)
-    })
-
-    var offcanvasElementList = [].slice.call(document.querySelectorAll('.offcanvas'))
-    var offcanvasList = offcanvasElementList.map(function (offcanvasEl) {
-        return new bootstrap.Offcanvas(offcanvasEl)
-    })
-
-
+        
         const searchInput = document.getElementById('searchInput');
         const table = document.querySelector('table');
         const headers = table.querySelectorAll('th.sortable');
         let currentSort = { column: 'date', direction: 'desc' };
     
-        // Fonction de recherche
-        searchInput.addEventListener('input', function(event) {
-            const searchText = event.target.value.toLowerCase();
-            filterTickets(searchText);
-        });
-    
-        function filterTickets(searchText) {
-            const rows = table.querySelectorAll('tbody tr');
-            rows.forEach(function(row) {
-                const ticketData = row.textContent.toLowerCase();
-                row.style.display = ticketData.includes(searchText) ? '' : 'none';
-            });
-        }
-    
-        // Fonction de tri
-        headers.forEach(header => {
-            header.addEventListener('click', () => {
-                const column = header.dataset.sort;
-                const direction = currentSort.column === column && currentSort.direction === 'asc' ? 'desc' : 'asc';
-                sortTable(column, direction);
-                updateSortIcons(header, direction);
-                currentSort = { column, direction };
-            });
-        });
-    
-        function sortTable(column, direction) {
-            const rows = Array.from(table.querySelectorAll('tbody tr'));
-            const sortedRows = rows.sort((a, b) => {
-                let aValue, bValue;
-                if (column === 'date') {
-                    const aDate = a.querySelector(`td:nth-child(${getColumnIndex(column)})`).dataset.date;
-                    const bDate = b.querySelector(`td:nth-child(${getColumnIndex(column)})`).dataset.date;
-                    aValue = parseDate(aDate);
-                    bValue = parseDate(bDate);
-                } else {
-                    aValue = a.querySelector(`td:nth-child(${getColumnIndex(column)})`).textContent.trim();
-                    bValue = b.querySelector(`td:nth-child(${getColumnIndex(column)})`).textContent.trim();
-                }
-                
-                if (column === 'date') {
-                    return direction === 'desc' ? bValue - aValue : aValue - bValue;
-                } else {
-                    return direction === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
-                }
-            });
-            table.querySelector('tbody').append(...sortedRows);
-        }
-    
-        function parseDate(dateString) {
-            const [day, month, year] = dateString.split('-');
-            return new Date(year, month - 1, day);
-        }
-    
-        function getColumnIndex(column) {
-            return Array.from(headers).findIndex(header => header.dataset.sort === column) + 1;
-        }
-    
-        function updateSortIcons(clickedHeader, direction) {
-            headers.forEach(header => {
-                header.querySelector('.icon-arrow').textContent = '↕';
-            });
-            clickedHeader.querySelector('.icon-arrow').textContent = direction === 'asc' ? '↑' : '↓';
-        }
-    
-        // Tri initial par date (le plus récent en premier)
-        sortTable('date', 'desc');
-        updateSortIcons(document.querySelector('th[data-sort="date"]'), 'desc');
-    
+        
         // Gestion des clics sur les lignes pour ouvrir le modal
         const rows = table.querySelectorAll('.clickable-row');
         const modal = new bootstrap.Modal(document.getElementById('ticketModal'));
@@ -214,6 +129,18 @@
                     });
             });
         });
+
+        // Initialisation des composants Bootstrap
+    var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+    var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+        return new bootstrap.Dropdown(dropdownToggleEl)
+    })
+
+    var offcanvasElementList = [].slice.call(document.querySelectorAll('.offcanvas'))
+    var offcanvasList = offcanvasElementList.map(function (offcanvasEl) {
+        return new bootstrap.Offcanvas(offcanvasEl)
+    })
+
         // Gestion spécifique des dropdowns
     dropdownElementList.forEach(dropdownToggle => {
         dropdownToggle.addEventListener('click', function(event) {
@@ -224,10 +151,9 @@
         });
     });
 
-    // Logging pour le débogage
-    console.log('Nombre de dropdowns initialisés:', dropdownList.length);
+
 }); 
     </script>
     
-    </body>
+  
     </html>
