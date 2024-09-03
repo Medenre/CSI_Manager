@@ -1,61 +1,46 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const table = document.querySelector('table');
-    const tbody = document.getElementById('ticketTableBody');
-    const pagination = document.getElementById('pagination');
     const itemsPerPageSelect = document.getElementById('itemsPerPage');
-    const searchInput = document.getElementById('searchInput');
+    const paginationContainer = document.getElementById('pagination');
+    const ticketTable = document.querySelector('.tab-pane.active table');
     let currentPage = 1;
-    let itemsPerPage = parseInt(itemsPerPageSelect.value);
-    let filteredRows = [];
-
-    function showPage(page) {
-        const start = (page - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
-        const rows = tbody.querySelectorAll('tr');
-        
-        rows.forEach((row, index) => {
-            if (filteredRows.length > 0) {
-                row.style.display = filteredRows.includes(row) && index >= start && index < end ? '' : 'none';
-            } else {
-                row.style.display = index >= start && index < end ? '' : 'none';
-            }
-        });
-
-        updatePagination();
-    }
+    let itemsPerPage = 10;
 
     function updatePagination() {
-        const rowCount = filteredRows.length > 0 ? filteredRows.length : tbody.querySelectorAll('tr').length;
-        const pageCount = Math.ceil(rowCount / itemsPerPage);
-        pagination.innerHTML = '';
+        const rows = Array.from(ticketTable.querySelectorAll('tbody tr'));
+        const totalPages = Math.ceil(rows.length / itemsPerPage);
 
-        for (let i = 1; i <= pageCount; i++) {
+        // Afficher les éléments de la page actuelle
+        rows.forEach((row, index) => {
+            row.style.display = (index >= (currentPage - 1) * itemsPerPage && index < currentPage * itemsPerPage) ? '' : 'none';
+        });
+
+        // Mettre à jour les boutons de pagination
+        paginationContainer.innerHTML = '';
+        for (let i = 1; i <= totalPages; i++) {
             const li = document.createElement('li');
-            li.className = `page-item ${currentPage === i ? 'active' : ''}`;
-            li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
-            li.addEventListener('click', (e) => {
+            li.classList.add('page-item');
+            if (i === currentPage) {
+                li.classList.add('active');
+            }
+            const a = document.createElement('a');
+            a.classList.add('page-link');
+            a.href = '#';
+            a.textContent = i;
+            a.addEventListener('click', (e) => {
                 e.preventDefault();
                 currentPage = i;
-                showPage(currentPage);
+                updatePagination();
             });
-            pagination.appendChild(li);
+            li.appendChild(a);
+            paginationContainer.appendChild(li);
         }
     }
 
     itemsPerPageSelect.addEventListener('change', function() {
         itemsPerPage = parseInt(this.value);
         currentPage = 1;
-        showPage(currentPage);
+        updatePagination();
     });
 
-    searchInput.addEventListener('input', function() {
-        const searchText = this.value.toLowerCase();
-        const rows = tbody.querySelectorAll('tr');
-        filteredRows = Array.from(rows).filter(row => 
-            row.textContent.toLowerCase().includes(searchText)
-        );
-        currentPage = 1;
-        showPage(currentPage);
-    });
-    showPage(currentPage);
+    updatePagination();
 });

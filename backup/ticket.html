@@ -1,80 +1,157 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en" data-bs-theme="light">
+
 <head>
-  <meta charset="UTF-8">
-  <title>CSI Manager | Dashboard</title>
-  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-  <link rel="stylesheet" href="{{ url_for('static', filename='sidebar.css')}}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='card.css')}}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='ticket.css')}}">
-
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSI Manager</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='ticket.css')}}">
 </head>
-{% include 'sidebar.html' %}
 <body>
-<main class="table" id="customers_table">
-    <section class="table__header">
-        <h1>Liste des tickets</h1>
-        <div class="input-group">
-            <input type="search" placeholder="Rechercher un ticket...">
-            <img src="{{ url_for('static', filename='images/search.png') }}" alt="">
-        </div>
-       <!-- <div class="export__file">
-            <label for="export-file" class="export__file-btn" title="Export File"></label>
-            <input type="checkbox" id="export-file">
-            <div class="export__file-options">
-                <label>Exporter vers &nbsp; &#10140;</label>
-                <label for="export-file" id="toPDF">PDF <img src="{{ url_for('static', filename='images/pdf.png') }}" alt=""></label>
-                <label for="export-file" id="toJSON">JSON <img src="{{ url_for('static', filename='images/json.png') }}" alt=""></label>
-                <label for="export-file" id="toCSV">CSV <img src="{{ url_for('static', filename='images/csv.png') }}" alt=""></label>
-                <label for="export-file" id="toEXCEL">EXCEL <img src="{{ url_for('static', filename='images/excel.png') }}" alt=""></label>
-            </div>
-        </div> -->
-    </section>
-    <section class="table__body">
-        <table class="table_ticket ">
-            <thead>
-                <tr>
-                    <th> Id <span class="icon-arrow">&UpArrow;</span></th>
-                    <th> Utilisateurs <span class="icon-arrow">&UpArrow;</span></th>
-                    <th> Localisation <span class="icon-arrow">&UpArrow;</span></th>
-                    <th> Sujet <span class="icon-arrow">&UpArrow;</span></th>
-                    <th> Date <span class="icon-arrow">&UpArrow;</span></th>
-                    <th> Statut <span class="icon-arrow">&UpArrow;</span></th>
-                    <th> Détails </th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for ticket in tickets %}
-                <tr>
-                    <td>{{ticket.id}}</td>
-                    <td>{{ticket.username}}</td>
-                    <td>{{ticket.location}}</td>
-                    <td>{{ticket.title}}</td>
-                    <td>{{ticket.date}}</td>
-                    <td>
-                        {% if ticket.status == 'Ouvert' %}
-                            <p class="status shipped">{{ ticket.status }}</p>
-                        {% elif ticket.status == 'Clôturer' %}
-                            <p class="status delivered">{{ ticket.status }}</p>
-                        {% elif ticket.status == 'En cours' %}
-                            <p class="status pending">{{ ticket.status }}</p>
-                        {% else %}
-                            <p class="status cancelled">{{ ticket.status }}</p>
-                        {% endif %}
-                    </td>
-                    <td><a href="{{ url_for('view_ticket', ticket_id=ticket.id) }}">Voir détails</a></td>
-                
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </section>
-</main>
-
     
-  
-<script  src="{{ url_for('static', filename='ticket.js')}}"></script>
-<script  src="{{ url_for('static', filename='sidebar.js')}}"></script>
 
-</body>
-</html>
+<!-- ticket.html -->
+{% include 'sidebar.html' %}
+
+       
+<div class="search input-group input-group-lg mb-3">
+    <span class="input-group-text" id="inputGroup-sizing-lg">Rechercher un ticket</span>
+    <input type="text" class="form-control" id="searchInput" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+</div>
+
+
+<table class="table tablerounededCorner mx-auto">
+    <thead>
+        <tr>
+            <th class="sortable" data-sort="id">Id <span class="icon-arrow">↑</span></th>
+            <th class="sortable" data-sort="username">Utilisateurs <span class="icon-arrow">↑</span></th>
+            <th class="sortable" data-sort="location">Localisation <span class="icon-arrow">↑</span></th>
+            <th class="sortable" data-sort="title">Sujet <span class="icon-arrow">↑</span></th>
+            <th class="sortable" data-sort="date">Date <span class="icon-arrow">↓</span></th>
+            <th class="sortable" data-sort="status">Statut <span class="icon-arrow">↑</span></th>
+        </tr>
+    </thead>
+    <tbody id="ticketTableBody">
+        {% for ticket in tickets %}
+        <tr class="clickable-row" data-ticket-id="{{ ticket.id }}">
+            <td>{{ticket.id}}</td>
+            <td>{{ticket.username}}</td>
+            <td>{{ticket.location}}</td>
+            <td>{{ticket.title}}</td>
+            <td data-date="{{ticket.date}}">{{ticket.date}}</td>
+            <td>
+                {% if ticket.status == 'Ouvert' %}
+                    <span class="badge bg-success">{{ ticket.status }}</span>
+                {% elif ticket.status == 'Clôturer' %}
+                    <span class="badge bg-danger">{{ ticket.status }}</span>
+                {% elif ticket.status == 'En cours' %}
+                    <span class="badge bg-warning">{{ ticket.status }}</span>
+                {% else %}
+                    <span class="badge bg-secondary">{{ ticket.status }}</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+    <div class="d-flex flex-row-reverse">
+        <div class="d-flex align-items-center">
+            <label for="itemsPerPage" class="me-2">Éléments par page:</label>
+            <select id="itemsPerPage" class="form-select me-5" style="width: auto;">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+        <nav aria-label="Pagination des tickets">
+            <ul class="pagination justify-content-center mb-0 pe-3" id="pagination">
+                <!-- Les boutons de pagination seront ajoutés ici par JavaScript -->
+            </ul>
+        </nav>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="ticketModal" tabindex="-1" aria-labelledby="ticketModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="ticketModalLabel">Détails du ticket</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <!-- Le contenu du modal sera chargé dynamiquement ici -->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        </div>
+        </div>
+    </div>
+    </div>
+    </body>
+    <style>
+    .clickable-row {
+        cursor: pointer;
+    }
+    .clickable-row:hover {
+        background-color: #0D6EFD;
+    }
+    
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script  src="{{ url_for('static', filename='ticket_search_table.js')}}"></script>
+<script  src="{{ url_for('static', filename='ticket_pages.js')}}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM fully loaded');
+        
+        const searchInput = document.getElementById('searchInput');
+        const table = document.querySelector('table');
+        const headers = table.querySelectorAll('th.sortable');
+        let currentSort = { column: 'date', direction: 'desc' };
+    
+        
+        // Gestion des clics sur les lignes pour ouvrir le modal
+        const rows = table.querySelectorAll('.clickable-row');
+        const modal = new bootstrap.Modal(document.getElementById('ticketModal'));
+        rows.forEach(row => {
+            row.addEventListener('click', function(event) {
+                // Empêcher la propagation de l'événement pour éviter d'interférer avec la sidebar
+                event.stopPropagation();
+                
+                const ticketId = this.dataset.ticketId;
+                document.querySelector('#ticketModal .modal-body').innerHTML = `Chargement des détails pour le ticket ${ticketId}...`;
+                modal.show();
+                
+                // Appel AJAX pour récupérer les détails du ticket
+                axios.get(`/ticket/${ticketId}`)
+                    .then(response => {
+                        const ticket = response.data;
+                        document.querySelector('#ticketModal .modal-body').innerHTML = `
+                            <h4>Ticket #${ticket.id}</h4>
+                            <p><strong>Utilisateur:</strong> ${ticket.username}</p>
+                            <p><strong>Localisation:</strong> ${ticket.location}</p>
+                            <p><strong>Sujet:</strong> ${ticket.title}</p>
+                            <p><strong>Date:</strong> ${ticket.date}</p>
+                            <p><strong>Statut:</strong> ${ticket.status}</p>
+                            <p><strong>Description:</strong> ${ticket.description}</p>
+                        `;
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la récupération des détails du ticket:', error);
+                        document.querySelector('#ticketModal .modal-body').innerHTML = 'Une erreur est survenue lors du chargement des détails du ticket.';
+                    });
+            });
+    });   
+});
+    </script>
+   
+    
+    </body>
+    </html>
