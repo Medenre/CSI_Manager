@@ -15,11 +15,12 @@
 <!-- ticket.html -->
 {% include 'sidebar.html' %}
 
+<!-- RECHERCHE -->
     <div class="search input-group input-group-lg mb-2">
         <span class="input-group-text" id="inputGroup-sizing-lg">Rechercher un ticket</span>
         <input type="text" class="form-control" id="searchInput" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
     </div>
-
+<!-- TABS -->
     <ul class="nav nav-tabs mb-1 mx-2" id="ticketTabs" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="active-tab" data-bs-toggle="tab" data-bs-target="#active" type="button" role="tab" aria-controls="active" aria-selected="true">Tickets actifs</button>
@@ -28,7 +29,7 @@
             <button class="nav-link nav-custom" id="archive-tab" data-bs-toggle="tab" data-bs-target="#archive" type="button" role="tab" aria-controls="archive" aria-selected="false">Archives</button>
         </li>
     </ul>
-
+<!-- TABS - EN COURS -->
     <div class="tab-content" id="ticketTabContent">
         <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
             <table class="table tablerounededCorner mx-auto">
@@ -56,8 +57,6 @@
                                     <span class="badge bg-success">{{ ticket.status }}</span>
                                 {% elif ticket.status == 'En cours' %}
                                     <span class="badge bg-warning">{{ ticket.status }}</span>
-                                {% else %}
-                                    <span class="badge bg-secondary">{{ ticket.status }}</span>
                                 {% endif %}
                             </td>
                         </tr>
@@ -66,6 +65,7 @@
                 </tbody>
             </table>
         </div>
+<!-- TABS - ARCHIVES -->
         <div class="tab-pane fade" id="archive" role="tabpanel" aria-labelledby="archive-tab">
             <table class="table tablerounededCorner mx-auto">
                 <thead>
@@ -98,6 +98,7 @@
         </div>
     </div>
 
+<!-- PAGINATION -->
     <div class="d-flex flex-row-reverse">
         <div class="d-flex align-items-center">
             <label for="itemsPerPage" class="me-2">Éléments par page:</label>
@@ -115,30 +116,36 @@
         </nav>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="ticketModal" tabindex="-1" aria-labelledby="ticketModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="ticketModalLabel">Détails du ticket</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- MODAL -->
+        <div class="modal fade" id="ticketModal" tabindex="-1" aria-labelledby="ticketModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ticketModalLabel">Détails du ticket</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <textarea class="form-control" aria-label="With textarea"></textarea>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <div>  
+                        <button type="button" class="btn btn-warning" >Prendre en charge</button>
+                        <button type="button" class="btn btn-danger" >Clôturer</button>
+                        </div>
+                        <button type="button" class="btn btn-primary" >Enregistrer</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-            <!-- Le contenu du modal sera chargé dynamiquement ici -->
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-        </div>
-        </div>
-    </div>
-    </div>
     </body>
+
     <style>
     .clickable-row {
         cursor: pointer;
     } 
     .clickable-row:hover {
         background-color: #0D6EFD;
+        color: aliceblue;
     }
     
     .nav-custom {
