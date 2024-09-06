@@ -32,7 +32,6 @@ def init_app(app):  #POUR INIT APP.PY
 
         # Récupérer les données de la base de données
         open_tickets = Ticket.query.filter_by(status='Ouvert').count()
-        closed_tickets = Ticket.query.filter_by(status='Fermer').count()
         in_progress_tickets = Ticket.query.filter_by(status='En cours').count()
         resolved_tickets = Ticket.query.filter_by(status='Clôturer').count()
 
@@ -46,7 +45,7 @@ def init_app(app):  #POUR INIT APP.PY
                 else:
                     tickets_by_month[month] = 1
 
-        return render_template('index.html' , tickets_by_month=tickets_by_month,current_user=current_user,open_tickets=open_tickets, closed_tickets=closed_tickets, in_progress_tickets=in_progress_tickets, resolved_tickets=resolved_tickets)
+        return render_template('index.html' , tickets_by_month=tickets_by_month,current_user=current_user,open_tickets=open_tickets, in_progress_tickets=in_progress_tickets, resolved_tickets=resolved_tickets)
     
     # PAGE TICKET
     @app.route('/ticket')

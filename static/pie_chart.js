@@ -1,15 +1,14 @@
 // Récupérer les données passées par Flask
 const openTickets = document.getElementById('open_tickets').innerText;
-const closedTickets = document.getElementById('closed_tickets').innerText;
 const inProgressTickets = document.getElementById('in_progress_tickets').innerText;
 const resolvedTickets = document.getElementById('resolved_tickets').innerText;
 
 // Créer un tableau de données
 let data = {
-    labels: ['Ouverts', 'Fermés', 'En cours', 'Clôturés'],
+    labels: ['Ouverts','En cours', 'Clôturés'],
     datasets: [{
-        data: [openTickets, closedTickets, inProgressTickets, resolvedTickets],
-        backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56', '#4BC0C0']
+        data: [openTickets, inProgressTickets, resolvedTickets],
+        backgroundColor: ['#36A2EB', '#FFCE56', '#4BC0C0']
     }]
 };
 
@@ -39,7 +38,7 @@ let options = {
             }  
         },
         textInside: {
-            text: "Total: " + (parseInt(openTickets) + parseInt(closedTickets) + parseInt(inProgressTickets) + parseInt(resolvedTickets)),
+            text: "Total: " + (parseInt(openTickets) + parseInt(inProgressTickets) + parseInt(resolvedTickets)),
             color: 'black',
             fontSize: 20
         }
