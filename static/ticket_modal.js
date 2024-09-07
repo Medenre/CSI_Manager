@@ -14,19 +14,21 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(ticket => {
                 document.querySelector('#ticketModal .modal-body').innerHTML = `
                     <div class="d-flex">
-                        <div class="p-2 w-50">
+                        <div class="col-6">
                             <h4 class="mb-4">Ticket #${ticket.id}</h4>
                             <p><strong>Utilisateur:</strong> ${ticket.username}</p>
                             <p><strong>Localisation:</strong> ${ticket.location}</p>
                             <p><strong>Sujet:</strong> ${ticket.title}</p>
                             <p><strong>Date:</strong> ${ticket.date}</p>
                             <p><strong>Statut:</strong> ${ticket.status}</p>
-                            <p><strong>Description:</strong> ${ticket.description}</p>
+                            <p><strong>Description:</strong>
+                            <textarea class="form-control" aria-label="With textarea" style="height: 10rem"> ${ticket.description}</textarea>
                         </div>
                         
-                        <div class="p-2 w-75">
+                        <div class="col-6">
                             <p><strong>Solution:</strong>
-                            <textarea class="form-control" aria-label="With textarea"></textarea>
+                            <textarea class="form-control" aria-label="With textarea" style="height: 13rem"></textarea>
+                            <div class="badge text-bg-warning text-wrap fs-6" style="width: 8rem">Pris en charge par :</div>
                         </div>
                     </div>
                 `;
