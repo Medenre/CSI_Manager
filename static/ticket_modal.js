@@ -28,11 +28,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         <div class="col-6 pe-3">
                             <p><strong>Solution:</strong>
-                            <textarea class="form-control" aria-label="With textarea" style="height: 13rem"></textarea>
+                            <textarea class="form-control" style="height: 13rem">${ticket.admin_response}</textarea>
 
                             <div class="input-group mb-3">
                             <span class="input-group-text ig1-background fw-bold" id="inputGroup-sizing-default">Pris en charge par :</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" disabled>
+                            <input type="text" class="form-control" disabled>
                             </div>
 
                             <div class="input-group mb-3">

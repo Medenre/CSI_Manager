@@ -285,7 +285,8 @@ def init_app(app):  #POUR INIT APP.PY
             'title': ticket.title,
             'date': ticket.date,
             'status': ticket.status,
-            'description': ticket.description
+            'description': ticket.description,
+            'admin_response' : ticket.admin_response
         })
 
     @app.route('/change_status/<int:ticket_id>/<new_status>')

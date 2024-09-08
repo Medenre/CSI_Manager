@@ -16,7 +16,9 @@ class Ticket(db.Model):
     status = db.Column(db.String(20), default='Ouvert')
     is_admin_response = db.Column(db.Boolean, default=False)
     admin_response = db.Column(db.Text)
-
+    takeby = db.Column(db.Text)
+    closeby = db.Column(db.Text)
+    date_close = db.Column(db.Text)
 class Location(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     rooms = db.Column(db.Text)
