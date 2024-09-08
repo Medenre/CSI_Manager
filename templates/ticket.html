@@ -45,7 +45,7 @@
                 </thead>
                 <tbody id="activeTicketTableBody">
                     {% for ticket in tickets %}
-                        {% if ticket.status != 'Clôturer' %}
+                        {% if ticket.status != 'Fermer' %}
                         <tr class="clickable-row" data-ticket-id="{{ ticket.id }}">
                             <td>{{ticket.id}}</td>
                             <td>{{ticket.username}}</td>
@@ -80,7 +80,7 @@
                 </thead>
                 <tbody id="archivedTicketTableBody">
                     {% for ticket in tickets %}
-                        {% if ticket.status == 'Clôturer' %}
+                        {% if ticket.status == 'Fermer' %}
                         <tr class="clickable-row" data-ticket-id="{{ ticket.id }}">
                             <td>{{ticket.id}}</td>
                             <td>{{ticket.username}}</td>
@@ -137,6 +137,7 @@
                 </div>
            </div>
         </div>
+
     </body>
 
     <style>

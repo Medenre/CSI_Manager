@@ -33,7 +33,7 @@ def init_app(app):  #POUR INIT APP.PY
         # Récupérer les données de la base de données
         open_tickets = Ticket.query.filter_by(status='Ouvert').count()
         in_progress_tickets = Ticket.query.filter_by(status='En cours').count()
-        resolved_tickets = Ticket.query.filter_by(status='Clôturer').count()
+        resolved_tickets = Ticket.query.filter_by(status='Fermer').count()
 
         # Query for tickets by month
         tickets = Ticket.query.all()
@@ -265,7 +265,7 @@ def init_app(app):  #POUR INIT APP.PY
         if request.method == 'POST':
             admin_response = request.form['admin_response']
             ticket.admin_response = admin_response
-            ticket.status = 'Closed'
+            ticket.status = 'Fermer'
             ticket.is_admin_response = True
             db.session.commit()
             return redirect(url_for('index'))
