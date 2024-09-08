@@ -271,11 +271,7 @@ def init_app(app):  #POUR INIT APP.PY
             return redirect(url_for('index'))
         return render_template('respond_ticket.html', ticket=ticket)
 
-    @app.route('/diagramme')
-    def diagramme():
-        # Transmettre les données au modèle HTML
-        return render_template('diagramme.html', open_tickets=open_tickets, closed_tickets=closed_tickets, in_progress_tickets=in_progress_tickets, resolved_tickets=resolved_tickets)
-        
+      
     @app.route('/ticket/<int:ticket_id>')
     def get_ticket_details(ticket_id):
         if 'user_id' not in session:

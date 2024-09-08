@@ -24,11 +24,23 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p><strong>Description:</strong>
                             <textarea class="form-control" aria-label="With textarea" style="height: 10rem"> ${ticket.description}</textarea>
                         </div>
-                        
-                        <div class="col-6">
+                        <div class="p-2"></div>
+
+                        <div class="col-6 pe-3">
                             <p><strong>Solution:</strong>
                             <textarea class="form-control" aria-label="With textarea" style="height: 13rem"></textarea>
-                            <div class="badge text-bg-warning text-wrap fs-6" style="width: 8rem">Pris en charge par :</div>
+
+                            <div class="input-group mb-3">
+                            <span class="input-group-text ig1-background fw-bold" id="inputGroup-sizing-default">Pris en charge par :</span>
+                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" disabled>
+                            </div>
+
+                            <div class="input-group mb-3">
+                            <span class="input-group-text ig2-background fw-bold" id="inputGroup-sizing-default">Clôturer :</span>
+                            <input type="text" class="form-control" disabled>
+                            <input type="text" class="form-control" disabled>
+                            </div>
+        
                         </div>
                     </div>
                 `;
