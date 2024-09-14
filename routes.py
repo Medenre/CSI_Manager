@@ -189,8 +189,16 @@ def init_app(app):  #POUR INIT APP.PY
     @app.route('/update_ticket_status/<int:ticket_id>', methods=['POST'])
     def update_ticket_status(ticket_id):
         ticket = Ticket.query.get_or_404(ticket_id)
+
         new_status = request.form['status']
         ticket.status = new_status
+        
+        takeby_action = request.form.get('takeby')
+        if takeby_action == 'takeby':
+            current_user = session.get('username')
+            ticket.takeby = current_user
+            flash('Deuxième action effectuée.', 'info')
+
         db.session.commit()
         flash(f'Le statut du ticket a été mis à jour à "{new_status}".', 'success')
         return redirect(url_for('ticket'))

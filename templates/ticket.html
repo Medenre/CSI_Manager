@@ -104,6 +104,7 @@
                                         <!-- Boutons pour mettre à jour le statut du ticket -->
                                         <form method="POST" action="{{ url_for('update_ticket_status', ticket_id=ticket.id) }}">
                                             <input type="hidden" name="status" value="En cours">
+                                            <input type="hidden" name="takeby" value="takeby">
                                             <button type="submit" class="btn btn-warning me-1">Prendre en charge</button>
                                         </form>
 
