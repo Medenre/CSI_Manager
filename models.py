@@ -19,6 +19,7 @@ class Ticket(db.Model):
     takeby = db.Column(db.Text)
     closeby = db.Column(db.Text)
     date_close = db.Column(db.Text)
+    
 class Location(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     rooms = db.Column(db.Text)

@@ -190,17 +190,36 @@ def init_app(app):  #POUR INIT APP.PY
     def update_ticket_status(ticket_id):
         ticket = Ticket.query.get_or_404(ticket_id)
 
-        new_status = request.form['status']
-        ticket.status = new_status
+        action = request.form.get('action')
         
-        takeby_action = request.form.get('takeby')
-        if takeby_action == 'takeby':
+        if action == 'takeby':
+            new_status = request.form['status']
+            ticket.status = new_status
             current_user = session.get('username')
             ticket.takeby = current_user
+            ticket.closeby = ' '
+            ticket.date_close = ' '
             flash('Deuxième action effectuée.', 'info')
+            
 
+        elif action == 'close':
+            new_status = request.form['status2']
+            ticket.status = new_status
+            current_user = session.get('username')
+            ticket.closeby = current_user
+
+            current_date = datetime.utcnow()
+            formatted_date = current_date.strftime("%d-%m-%Y")
+            ticket.date_close = formatted_date
+            flash('Troisième action effectuée.', 'info')
+
+        elif action == 'save':
+            admin_response = request.form.get('admin_response')
+            ticket.admin_response = admin_response
+        
+        
         db.session.commit()
-        flash(f'Le statut du ticket a été mis à jour à "{new_status}".', 'success')
+        
         return redirect(url_for('ticket'))
 
 

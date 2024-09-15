@@ -65,6 +65,7 @@
                     <div class="modal fade" id="ticketModal{{ ticket.id }}" tabindex="-1" aria-labelledby="ticketModalLabel{{ ticket.id }}" aria-hidden="true">
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content">
+                                <form method="POST" action="{{ url_for('update_ticket_status', ticket_id=ticket.id) }}">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="ticketModalLabel{{ ticket.id }}">Détails du ticket #{{ ticket.id }}</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -102,19 +103,16 @@
                                 <div class="modal-footer d-flex justify-content-between">
                                     <div class="d-flex justify-content-start">
                                         <!-- Boutons pour mettre à jour le statut du ticket -->
-                                        <form method="POST" action="{{ url_for('update_ticket_status', ticket_id=ticket.id) }}">
+                                        
                                             <input type="hidden" name="status" value="En cours">
-                                            <input type="hidden" name="takeby" value="takeby">
-                                            <button type="submit" class="btn btn-warning me-1">Prendre en charge</button>
-                                        </form>
+                                            <button type="submit" class="btn btn-warning me-1" name="action" value="takeby">Prendre en charge</button>
 
-                                        <form method="POST" action="{{ url_for('update_ticket_status', ticket_id=ticket.id) }}">
-                                            <input type="hidden" name="status" value="Fermer">
-                                            <button type="submit" class="btn btn-danger">Clôturer</button>
-                                        </form>
+                                            <input type="hidden" name="status2" value="Fermer">
+                                            <button type="submit" class="btn btn-danger" name="action" value="close">Clôturer</button>
+                                        
                                     </div>
-
-                                    <button type="button" class="btn btn-primary px-5" data-bs-dismiss="modal">Fermer</button>
+                                        <button type="submit" class="btn btn-primary px-5" name="action" value="save">Enregistrer</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +139,7 @@
                 <tbody id="archivedTicketTableBody">
                     {% for ticket in tickets %}
                     {% if ticket.status == 'Fermer' %}
-                    <tr class="clickable-row" data-ticket-id="{{ ticket.id }}">
+                    <tr class="clickable-row" data-bs-toggle="modal" data-bs-target="#ticketModal{{ ticket.id }}" data-ticket-id="{{ ticket.id }}">
                         <td>{{ticket.id}}</td>
                         <td>{{ticket.username}}</td>
                         <td>{{ticket.location}}</td>
@@ -151,6 +149,65 @@
                             <span class="badge bg-danger">{{ ticket.status }}</span>
                         </td>
                     </tr>
+                        <!-- MODAL - Ticket -->
+                    <div class="modal fade" id="ticketModal{{ ticket.id }}" tabindex="-1" aria-labelledby="ticketModalLabel{{ ticket.id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                                <form method="POST" action="{{ url_for('update_ticket_status', ticket_id=ticket.id) }}">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="ticketModalLabel{{ ticket.id }}">Détails du ticket #{{ ticket.id }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="d-flex">
+                                        <div class="col-6">
+                                            <h4 class="mb-4">Ticket #{{ ticket.id }}</h4>
+                                            <p><strong>Utilisateur:</strong> {{ ticket.username }}</p>
+                                            <p><strong>Localisation:</strong> {{ ticket.location }}</p>
+                                            <p><strong>Sujet:</strong> {{ ticket.title }}</p>
+                                            <p><strong>Date:</strong> {{ ticket.date }}</p>
+                                            <p><strong>Statut:</strong> {{ ticket.status }}</p>
+                                            <p><strong>Description:</strong></p>
+                                            <textarea class="form-control" aria-label="With textarea" style="height: 10rem">{{ ticket.description }}</textarea>
+                                        </div>
+                                        <div class="p-2"></div>
+                                        <div class="col-6 pe-3">
+                                            <p><strong>Solution:</strong></p>
+                                            <textarea class="form-control mb-3" style="height: 13rem" name="admin_response">{{ ticket.admin_response }}</textarea>
+
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text ig1-background fw-bold" id="inputGroup-sizing-default">Pris en charge par :</span>
+                                                <input type="text" class="form-control" value="{{ ticket.takeby }}" disabled>
+                                            </div>
+
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text ig2-background fw-bold" id="inputGroup-sizing-default">Clôturer :</span>
+                                                <input type="text" class="form-control" value="{{ ticket.closeby }}" disabled>
+                                                <input type="text" class="form-control" value="{{ ticket.date_close }}" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer d-flex justify-content-between">
+                                    <div class="d-flex justify-content-start">
+                                        <!-- Boutons pour mettre à jour le statut du ticket -->
+
+                                            <input type="hidden" name="status" value="En cours">
+                                            <button type="submit" class="btn btn-warning me-1" name="action" value="takeby">Prendre en charge</button>
+                                        
+                                            <input type="hidden" name="status2" value="Fermer">
+                                            <button type="submit" class="btn btn-danger" disabled>Clôturer</button>
+                                    
+                                    </div>
+                                    
+                                        
+                                        <button type="submit" class="btn btn-primary px-5" name="action" value="save">Enregistrer</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     {% endif %}
                     {% endfor %}
                 </tbody>
@@ -179,7 +236,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="{{ url_for('static', filename='ticket_search_table.js')}}"></script>
     <script src="{{ url_for('static', filename='ticket_pages.js')}}"></script>
-    <script src="{{ url_for('static', filename='ticket_modal.js')}}"></script>
+   
     <script src="{{ url_for('static', filename='ticket_tab.js')}}"></script>
 
     <script>
