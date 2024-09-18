@@ -191,7 +191,7 @@ def init_app(app):  #POUR INIT APP.PY
         ticket = Ticket.query.get_or_404(ticket_id)
 
         action = request.form.get('action')
-        
+
         if action == 'takeby':
             new_status = request.form['status']
             ticket.status = new_status
@@ -215,7 +215,9 @@ def init_app(app):  #POUR INIT APP.PY
 
         elif action == 'save':
             admin_response = request.form.get('admin_response')
+            description = request.form.get('description')
             ticket.admin_response = admin_response
+            ticket.description = description
         
         
         db.session.commit()

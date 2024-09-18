@@ -1,11 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM fully loaded');
-    
-
 
     const searchInput = document.getElementById('searchInput');
-    const table = document.querySelector('table');
-    const headers = table.querySelectorAll('th.sortable');
+    const tables = document.querySelectorAll('.tab-pane table');
+    const headers = document.querySelectorAll('th.sortable');
     let currentSort = { column: 'date', direction: 'desc' };
 
     // Fonction de recherche
@@ -15,10 +13,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function filterTickets(searchText) {
-        const rows = table.querySelectorAll('tbody tr');
-        rows.forEach(function(row) {
-            const ticketData = row.textContent.toLowerCase();
-            row.style.display = ticketData.includes(searchText) ? '' : 'none';
+        tables.forEach(table => {
+            const rows = table.querySelectorAll('tbody tr');
+            rows.forEach(function(row) {
+                const ticketData = row.textContent.toLowerCase();
+                row.style.display = ticketData.includes(searchText) ? '' : 'none';
+            });
         });
     }
 
@@ -34,26 +34,28 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function sortTable(column, direction) {
-        const rows = Array.from(table.querySelectorAll('tbody tr'));
-        const sortedRows = rows.sort((a, b) => {
-            let aValue, bValue;
-            if (column === 'date') {
-                const aDate = a.querySelector(`td:nth-child(${getColumnIndex(column)})`).dataset.date;
-                const bDate = b.querySelector(`td:nth-child(${getColumnIndex(column)})`).dataset.date;
-                aValue = parseDate(aDate);
-                bValue = parseDate(bDate);
-            } else {
-                aValue = a.querySelector(`td:nth-child(${getColumnIndex(column)})`).textContent.trim();
-                bValue = b.querySelector(`td:nth-child(${getColumnIndex(column)})`).textContent.trim();
-            }
-            
-            if (column === 'date') {
-                return direction === 'desc' ? bValue - aValue : aValue - bValue;
-            } else {
-                return direction === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
-            }
+        tables.forEach(table => {
+            const rows = Array.from(table.querySelectorAll('tbody tr'));
+            const sortedRows = rows.sort((a, b) => {
+                let aValue, bValue;
+                if (column === 'date') {
+                    const aDate = a.querySelector(`td:nth-child(${getColumnIndex(column)})`).dataset.date;
+                    const bDate = b.querySelector(`td:nth-child(${getColumnIndex(column)})`).dataset.date;
+                    aValue = parseDate(aDate);
+                    bValue = parseDate(bDate);
+                } else {
+                    aValue = a.querySelector(`td:nth-child(${getColumnIndex(column)})`).textContent.trim();
+                    bValue = b.querySelector(`td:nth-child(${getColumnIndex(column)})`).textContent.trim();
+                }
+                
+                if (column === 'date') {
+                    return direction === 'desc' ? bValue - aValue : aValue - bValue;
+                } else {
+                    return direction === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+                }
+            });
+            table.querySelector('tbody').append(...sortedRows);
         });
-        table.querySelector('tbody').append(...sortedRows);
     }
 
     function parseDate(dateString) {
@@ -76,4 +78,15 @@ document.addEventListener('DOMContentLoaded', function() {
     sortTable('date', 'desc');
     updateSortIcons(document.querySelector('th[data-sort="date"]'), 'desc');
 
+    // Gestion des onglets
+    const tabLinks = document.querySelectorAll('.nav-link');
+    tabLinks.forEach(tab => {
+        tab.addEventListener('click', function() {
+            setTimeout(() => {
+                // Réappliquer le tri et la recherche après le changement d'onglet
+                sortTable(currentSort.column, currentSort.direction);
+                filterTickets(searchInput.value.toLowerCase());
+            }, 0);
+        });
+    });
 });

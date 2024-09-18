@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const paginationContainer = document.getElementById('pagination');
     const ticketTable = document.querySelector('.tab-pane.active table');
     let currentPage = 1;
-    let itemsPerPage = 10;
+    let itemsPerPage = 100; // Définir à 100 par défaut
 
     function updatePagination() {
         const rows = Array.from(ticketTable.querySelectorAll('tbody tr'));
@@ -16,24 +16,62 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Mettre à jour les boutons de pagination
         paginationContainer.innerHTML = '';
-        for (let i = 1; i <= totalPages; i++) {
-            const li = document.createElement('li');
-            li.classList.add('page-item');
-            if (i === currentPage) {
-                li.classList.add('active');
-            }
-            const a = document.createElement('a');
-            a.classList.add('page-link');
-            a.href = '#';
-            a.textContent = i;
-            a.addEventListener('click', (e) => {
-                e.preventDefault();
-                currentPage = i;
-                updatePagination();
-            });
-            li.appendChild(a);
-            paginationContainer.appendChild(li);
+        
+        // Ajouter les boutons de page
+        const maxVisiblePages = 7;
+        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+        if (endPage - startPage + 1 < maxVisiblePages) {
+            startPage = Math.max(1, endPage - maxVisiblePages + 1);
         }
+
+        if (startPage > 1) {
+            paginationContainer.appendChild(createPageButton(1));
+            if (startPage > 2) {
+                paginationContainer.appendChild(createEllipsis());
+            }
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+            paginationContainer.appendChild(createPageButton(i));
+        }
+
+        if (endPage < totalPages) {
+            if (endPage < totalPages - 1) {
+                paginationContainer.appendChild(createEllipsis());
+            }
+            paginationContainer.appendChild(createPageButton(totalPages));
+        }
+    }
+
+    function createPageButton(pageNumber) {
+        const li = document.createElement('li');
+        li.classList.add('page-item');
+        if (pageNumber === currentPage) {
+            li.classList.add('active');
+        }
+        const a = document.createElement('a');
+        a.classList.add('page-link');
+        a.href = '#';
+        a.textContent = pageNumber;
+        a.addEventListener('click', (e) => {
+            e.preventDefault();
+            currentPage = pageNumber;
+            updatePagination();
+        });
+        li.appendChild(a);
+        return li;
+    }
+
+    function createEllipsis() {
+        const li = document.createElement('li');
+        li.classList.add('page-item', 'disabled');
+        const span = document.createElement('span');
+        span.classList.add('page-link');
+        span.textContent = '...';
+        li.appendChild(span);
+        return li;
     }
 
     itemsPerPageSelect.addEventListener('change', function() {
@@ -41,6 +79,9 @@ document.addEventListener('DOMContentLoaded', function() {
         currentPage = 1;
         updatePagination();
     });
+
+    // Définir la valeur par défaut du select à 100
+    itemsPerPageSelect.value = '100';
 
     updatePagination();
 });
